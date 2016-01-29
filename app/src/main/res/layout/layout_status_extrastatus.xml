@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/layout_status_extra"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#efefef"
+              android:orientation="vertical"
+              android:visibility="gone"
+    >
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dfdfdf"></View>
+
+    <TextView
+        android:id="@+id/textview_status_extratext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="第一次去看偶像表演的时候我们的表现"
+        android:textColor="#444"
+        android:textSize="16sp"/>
+
+    <FrameLayout
+        android:id="@+id/layout_extraimgs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <com.sovnem.yoyoweibo.widget.MultiImageViewGroup
+            android:id="@+id/imageviews_status_extraimgs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.sovnem.yoyoweibo.widget.MultiImageViewGroup>
+    </FrameLayout>
+
+</LinearLayout>

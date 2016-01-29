@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sovnem.yoyoweibo.view.activity.MainActivity">
+
+    <com.sovnem.yoyoweibo.widget.CannotScrollViewpager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"></com.sovnem.yoyoweibo.widget.CannotScrollViewpager>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cfcfcf"></View>
+
+    <RadioGroup
+        android:id="@+id/rgrp_main_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eaeaea"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtn_main_home"
+            style="@style/main_bottom_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_maintab_home"
+            android:text="首页"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_main_message"
+            style="@style/main_bottom_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/selector_maintab_message"
+            android:text="消息"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/selector_main_add"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_main_explor"
+            style="@style/main_bottom_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/selector_maintab_explo"
+            android:text="发现"
+            />
+
+        <RadioButton
+            android:id="@+id/rbtn_main_mine"
+            style="@style/main_bottom_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/selector_maintab_mine"
+            android:text="我的"/>
+
+    </RadioGroup>
+
+</LinearLayout>

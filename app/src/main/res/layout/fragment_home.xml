@@ -9,11 +9,16 @@
         layout="@layout/layout_global_head"
         ></include>
 
-    <ListView
-        android:id="@+id/listview_first_list"
+    <com.sovnem.yoyoweibo.widget.PullToLoadLayout
         android:layout_width="match_parent"
-        android:divider="@null"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listview_first_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
+    </com.sovnem.yoyoweibo.widget.PullToLoadLayout>
 
 
 </LinearLayout>

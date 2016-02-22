@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ import java.util.Locale;
  * 微博适配器
  * Created by sovnem on 16/1/21.
  */
-public class StatussAdapter extends BaseAdapter {
+public class StatussAdapter extends BaseAdapter implements AbsListView.OnScrollListener {
 
     private SimpleDateFormat sdf, sdf1, sdf2;
     private List<Status> statuses;
@@ -158,10 +159,15 @@ public class StatussAdapter extends BaseAdapter {
             iv = new ClickAbleImageView(context, isGif ? ClickAbleImageView
                     .TYPE_GIF : ClickAbleImageView.TYPE_DEFAULT);
             imgsLayout.addView(iv);
-            url = url.replace("thumbnail", count == 1 ? "large" : "bmiddle");
-//            Picasso.with(context).load(url).error(R.mipmap.face).transform
-//                    (new CropTransformation(iv)).into(iv);
-            Glide.with(context).load(url).error(R.mipmap.face).into(iv);
+            url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "bmiddle");
+
+
+            if (isGif) {
+                Picasso.with(context).load(url).error(R.mipmap.face).transform
+                        (new CropTransformation(iv)).into(iv);
+            } else {
+                Glide.with(context).load(url).error(R.mipmap.face).dontAnimate().into(iv);
+            }
 
 
 //            if (count == 1) {
@@ -170,6 +176,20 @@ public class StatussAdapter extends BaseAdapter {
 //                Glide.with(context).load(url).into(iv);
 //            }
         }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
+            Glide.with(context).pauseRequests();
+        } else {
+            Glide.with(context).resumeRequests();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
     }
 
 

@@ -69,5 +69,6 @@ public class FirstFragment extends BaseFragment {
         StatusList statuss = StatusList.parse(s);
         StatussAdapter adapter = new StatussAdapter(getActivity(), statuss.statusList);
         mlv.setAdapter(adapter);
+        mlv.setOnScrollListener(adapter);
     }
 }

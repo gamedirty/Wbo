@@ -29,6 +29,8 @@ public class WeiboProvider {
     /**
      * 获取关注的人的微博
      *
+     * 先看数据库里是不是有需要的内容，如果数据库没有，从网络获取，返回并把获取到的内容存入数据库
+     *
      * @param context
      * @param count
      * @param page

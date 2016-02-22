@@ -2,6 +2,7 @@ package com.sovnem.data.biz;
 
 import android.content.Context;
 
+import com.sina.weibo.sdk.openapi.StatusesAPI;
 import com.sovnem.data.DataConstants;
 import com.sovnem.data.standard.RequestListener;
 
@@ -13,9 +14,11 @@ import java.util.HashMap;
  */
 public class WeiboManager extends BaseManager {
 
+    private StatusesAPI statusesAPI;
 
     public WeiboManager(Context context) {
         super(context);
+        statusesAPI = new StatusesAPI(context, DataConstants.APP_KEY, TokenManager.readAccessToken(context));
     }
 
     /**
@@ -85,6 +88,8 @@ public class WeiboManager extends BaseManager {
         params.put("count", count + "");
         params.put("page", page + "");
         doGetRequest(params, DataConstants.getFriends_timeline, requestListener);
+
+//        statusesAPI.friendsTimeline(0,0,count,page,false,0,false,requestListener);
     }
 
 }

@@ -32,5 +32,9 @@ public class WeiboProvider {
         wm.getFriendTimelineAfter(Long.parseLong(newest), requestListener);
     }
 
+    public static void getFriendsWeibosBefore(String max, Context context, RequestListener requestListener) {
+        WeiboManager wm = new WeiboManager(context);
+        wm.getFriendTimelineBefore(Long.parseLong(max), requestListener);
+    }
 
 }

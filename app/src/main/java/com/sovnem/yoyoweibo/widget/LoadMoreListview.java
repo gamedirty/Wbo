@@ -33,10 +33,14 @@ public class LoadMoreListview extends ListView {
     private void init() {
         more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
         tv = (TextView) more.findViewById(R.id.textView_loadmore_text);
-        addFooterView(more);
     }
 
-    public void setStatusLoading() {
+    public void setStatusLoading(boolean isLoading) {
+        if (isLoading) {
+            addFooterView(more);
+        } else {
+            removeFooterView(more);
+        }
     }
 
     public void setStatusNomore() {

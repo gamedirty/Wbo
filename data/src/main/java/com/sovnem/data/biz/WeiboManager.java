@@ -21,6 +21,9 @@ public class WeiboManager extends BaseManager {
 
     public void getFriendTimeline(long since, long max, RequestListener listener) {
         statusesAPI.friendsTimeline(since, max, 20, 1, false, 0, false, listener);
+
+
+
     }
 
     public void getFriendTimelineBefore(long max, RequestListener listener) {

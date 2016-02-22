@@ -182,6 +182,11 @@ public class StatussAdapter extends BaseAdapter {
         }
     }
 
+    public void addOldStatuses(ArrayList<Status> statusList) {
+        statuses.addAll(statusList);
+        notifyDataSetChanged();
+    }
+
 
     class CropTranslation extends BitmapTransformation {
 

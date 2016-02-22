@@ -7,7 +7,6 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +35,7 @@ import java.util.Locale;
  * 微博适配器
  * Created by sovnem on 16/1/21.
  */
-public class StatussAdapter extends BaseAdapter implements AbsListView.OnScrollListener {
+public class StatussAdapter extends BaseAdapter {
 
     private SimpleDateFormat sdf, sdf1, sdf2;
     private List<Status> statuses;
@@ -49,6 +48,11 @@ public class StatussAdapter extends BaseAdapter implements AbsListView.OnScrollL
         //MMM dd hh:mm:ss Z yyyy
         sdf1 = new SimpleDateFormat("HH:mm:ss");
         sdf2 = new SimpleDateFormat("MM月dd日 HH:mm:ss");
+    }
+
+    public void addNewStatus(ArrayList<Status> news) {
+        statuses.addAll(0, news);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -176,20 +180,6 @@ public class StatussAdapter extends BaseAdapter implements AbsListView.OnScrollL
 //                Glide.with(context).load(url).into(iv);
 //            }
         }
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
-            Glide.with(context).pauseRequests();
-        } else {
-            Glide.with(context).resumeRequests();
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
     }
 
 

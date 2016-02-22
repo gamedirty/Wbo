@@ -15,7 +15,7 @@
         android:id="@+id/srfl_firstpage_refresh"
         android:layout_height="match_parent">
 
-        <ListView
+        <com.sovnem.yoyoweibo.widget.LoadMoreListview
             android:id="@+id/listview_first_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

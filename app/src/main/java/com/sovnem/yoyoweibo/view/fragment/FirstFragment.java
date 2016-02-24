@@ -33,13 +33,14 @@ import java.util.ArrayList;
  * <p/>
  * 加载更多是
  */
-public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
+public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TITLE = "首页";
     private LoadMoreListview mlv;
     private SwipeRefreshLayout srl;
     private ArrayList<Status> statuses;
     private String newest, oldest;//最新微博和最老微博的id
     private StatussAdapter adapter;
+    private int preLast;//记录上一次
 
     @Override
     public void setHead(TextView title) {
@@ -80,14 +81,17 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
             @Override
             public void run() {
                 srl.setRefreshing(true);
+                isLoading = true;
                 WeiboProvider.getFriendsWeibos(getActivity(), new RequestListener() {
                     @Override
                     public void onComplete(String s) {
                         showNewData(s);
+                        isLoading = false;
                     }
 
                     @Override
                     public void onWeiboException(WeiboException e) {
+                        isLoading = false;
                     }
                 });
             }
@@ -101,9 +105,12 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         recordId();
         adapter = new StatussAdapter(getActivity(), statuss.statusList);
         mlv.setAdapter(adapter);
-        mlv.setOnScrollListener(this);
+        mlv.setOnScrollListener(scrollListener);
     }
 
+    /**
+     * 记录 微博id
+     */
     private void recordId() {
         newest = statuses.get(0).id;
         oldest = statuses.get(statuses.size() - 1).id;
@@ -114,14 +121,17 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     @Override
     public void onRefresh() {
+        isLoading = true;
         WeiboProvider.getFriendsWeibosAfter(newest, getActivity(), new RequestListener() {
             @Override
             public void onComplete(String s) {
+                isLoading = false;
                 addNewestStatus(s);
             }
 
             @Override
             public void onWeiboException(WeiboException e) {
+                isLoading = false;
                 L.i(e.getMessage());
             }
         });
@@ -148,40 +158,51 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
-            Glide.with(this).pauseRequests();
-        } else {
-            Glide.with(this).resumeRequests();
-        }
-    }
+    boolean canLoad;
+    private boolean isLoading;
+    AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
 
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        L.i("总共item个数:" + totalItemCount);
-        if (firstVisibleItem + visibleItemCount - 1 == srl.getChildCount() - 1 &&
-                srl.getChildAt(srl.getChildCount() - 1).getBottom() <= srl.getHeight()) {
-            loadMore();
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
+                Glide.with(getActivity()).pauseRequests();
+            } else {
+                Glide.with(getActivity()).resumeRequests();
+            }
+            if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                    && !isLoading && canLoad) {
+                loadMore();
+            }
         }
-    }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+            canLoad = false;
+            if ((firstVisibleItem + visibleItemCount) >= totalItemCount) {
+                canLoad = true;
+            }
+        }
+    };
 
     /**
      * 加载更多
      */
     private void loadMore() {
-        L.i("加载更多");
+        isLoading = true;
         mlv.setStatusLoading(true);
-        WeiboProvider.getFriendsWeibosAfter(oldest, getActivity(), new RequestListener() {
+        WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), new RequestListener() {
             @Override
             public void onComplete(String s) {
                 addOldStatuss(s);
                 mlv.setStatusLoading(false);
+                isLoading = false;
             }
 
             @Override
             public void onWeiboException(WeiboException e) {
                 mlv.setStatusLoading(false);
+                isLoading = false;
             }
         });
     }
@@ -191,6 +212,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         if (list.statusList == null) {
             return;
         }
+        list.statusList.remove(0);
         adapter.addOldStatuses(list.statusList);
         oldest = list.statusList.get(list.statusList.size() - 1).id;
     }

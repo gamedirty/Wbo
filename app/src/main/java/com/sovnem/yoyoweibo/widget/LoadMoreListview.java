@@ -33,13 +33,13 @@ public class LoadMoreListview extends ListView {
     private void init() {
         more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
         tv = (TextView) more.findViewById(R.id.textView_loadmore_text);
+        addFooterView(more);
     }
 
     public void setStatusLoading(boolean isLoading) {
         if (isLoading) {
-            addFooterView(more);
+            tv.setText("加载中，请稍候");
         } else {
-            removeFooterView(more);
         }
     }
 

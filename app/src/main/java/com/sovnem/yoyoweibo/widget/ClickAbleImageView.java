@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.sovnem.yoyoweibo.R;
@@ -84,10 +85,26 @@ public class ClickAbleImageView extends ImageView {
         this.h = h;
     }
 
+//    @Override
+//    protected void dispatchSetPressed(boolean pressed) {
+//        super.dispatchSetPressed(pressed);
+//        this.pressed = pressed;
+//        invalidate();
+//    }
+
     @Override
-    protected void dispatchSetPressed(boolean pressed) {
-        super.dispatchSetPressed(pressed);
-        this.pressed = pressed;
-        invalidate();
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                pressed = true;
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                pressed = false;
+                invalidate();
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 }

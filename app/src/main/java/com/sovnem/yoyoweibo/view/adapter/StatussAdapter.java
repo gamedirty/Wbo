@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.sina.weibo.sdk.openapi.models.Status;
@@ -47,6 +48,11 @@ public class StatussAdapter extends BaseAdapter {
         //MMM dd hh:mm:ss Z yyyy
         sdf1 = new SimpleDateFormat("HH:mm:ss");
         sdf2 = new SimpleDateFormat("MM月dd日 HH:mm:ss");
+    }
+
+    public void addNewStatus(ArrayList<Status> news) {
+        statuses.addAll(0, news);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -157,15 +163,28 @@ public class StatussAdapter extends BaseAdapter {
             iv = new ClickAbleImageView(context, isGif ? ClickAbleImageView
                     .TYPE_GIF : ClickAbleImageView.TYPE_DEFAULT);
             imgsLayout.addView(iv);
-            url = url.replace("thumbnail", count == 1 ? "large" : "bmiddle");
-            Picasso.with(context).load(url).error(R.mipmap.face).transform
-                    (new CropTransformation(iv)).into(iv);
+            url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "bmiddle");
+
+
+            if (isGif) {
+                Picasso.with(context).load(url).error(R.mipmap.face).transform
+                        (new CropTransformation(iv)).into(iv);
+            } else {
+                Glide.with(context).load(url).error(R.mipmap.face).dontAnimate().into(iv);
+            }
+
+
 //            if (count == 1) {
 //                Glide.with(context).load(url).transform(new CropTranslation(context)).into(iv);
 //            } else {
 //                Glide.with(context).load(url).into(iv);
 //            }
         }
+    }
+
+    public void addOldStatuses(ArrayList<Status> statusList) {
+        statuses.addAll(statusList);
+        notifyDataSetChanged();
     }
 
 

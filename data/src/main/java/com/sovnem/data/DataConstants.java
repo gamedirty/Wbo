@@ -1,5 +1,7 @@
 package com.sovnem.data;
 
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+
 /**
  * Created by sovnem on 16/1/1.
  */
@@ -14,6 +16,7 @@ public class DataConstants {
 
 
     public static final String BASE_URL = "https://api.weibo.com/2/";//基础URL
+    public static Oauth2AccessToken token;
     /**
      * 微博相关接口
      */

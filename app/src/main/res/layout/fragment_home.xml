@@ -9,16 +9,18 @@
         layout="@layout/layout_global_head"
         ></include>
 
-    <com.sovnem.yoyoweibo.widget.PullToLoadLayout
+
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
+        android:id="@+id/srfl_firstpage_refresh"
         android:layout_height="match_parent">
 
-        <ListView
+        <com.sovnem.yoyoweibo.widget.LoadMoreListview
             android:id="@+id/listview_first_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"></ListView>
-    </com.sovnem.yoyoweibo.widget.PullToLoadLayout>
+            android:divider="@null"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

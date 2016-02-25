@@ -194,7 +194,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), new RequestListener() {
             @Override
             public void onComplete(String s) {
-                L.d("请求成功返回："+s);
+                L.d("请求成功返回：" + s);
                 addOldStatuss(s);
                 mlv.setStatusLoading(false);
                 isLoading = false;
@@ -209,10 +209,12 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
     private void addOldStatuss(String s) {
+//        L.i("加载更多返回值:" + s);
         StatusList list = StatusList.parse(s);
         if (list.statusList == null) {
             return;
         }
+        L.i("返回的个数是:" + list.statusList.size());
         list.statusList.remove(0);
         adapter.addOldStatuses(list.statusList);
         oldest = list.statusList.get(list.statusList.size() - 1).id;

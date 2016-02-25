@@ -2,6 +2,9 @@ package com.sovnem.yoyoweibo.view.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,6 +40,8 @@ public class StatussAdapter extends BaseAdapter {
     private SimpleDateFormat sdf, sdf1, sdf2;
     private List<Status> statuses;
     private Context context;
+    private int screenW;
+    private Drawable headBack;
 
     public StatussAdapter(Context context, List statuses) {
         this.statuses = statuses;
@@ -45,6 +50,8 @@ public class StatussAdapter extends BaseAdapter {
         //MMM dd hh:mm:ss Z yyyy
         sdf1 = new SimpleDateFormat("HH:mm:ss");
         sdf2 = new SimpleDateFormat("MM月dd日 HH:mm:ss");
+        screenW = context.getResources().getDisplayMetrics().widthPixels;
+        headBack = new ColorDrawable(Color.parseColor("#dfdfdf"));
     }
 
     public void addNewStatus(ArrayList<Status> news) {
@@ -159,8 +166,11 @@ public class StatussAdapter extends BaseAdapter {
             iv.setImageResource(-1);
 
             imgsLayout.addView(iv);
-            url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "bmiddle");
-            Glide.with(context).load(url).dontAnimate().transform(new MyBitmapTransform(context, iv)).thumbnail(0.7f).into(iv);
+            url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "large");
+
+            Glide.with(context).load(url).asBitmap().dontAnimate().transform(new MyBitmapTransform(context, iv, count)).//
+                    override(count == 1 ? (screenW / 3 * 2) : (screenW / 3), count == 1 ? (screenW / 3 * 2) : (screenW / 3)).//
+                    thumbnail(0.5f).into(iv);
         }
     }
 
@@ -177,10 +187,12 @@ public class StatussAdapter extends BaseAdapter {
 
     class MyBitmapTransform extends BitmapTransformation {
         ClickAbleImageView iv;
+        int count;
 
-        public MyBitmapTransform(Context context, ClickAbleImageView imageView) {
+        public MyBitmapTransform(Context context, ClickAbleImageView imageView, int count) {
             super(context);
             this.iv = imageView;
+            this.count = count;
         }
 
         @Override
@@ -188,8 +200,18 @@ public class StatussAdapter extends BaseAdapter {
                 outWidth, int outHeight) {
             int w = toTransform.getWidth();
             int h = toTransform.getHeight();
-            iv.setType(h >= w * 2 ? ClickAbleImageView.TYPE_LONGIMAGE : ClickAbleImageView.TYPE_DEFAULT);
-            return toTransform;
+            if (count == 1&&h >= w * 4)
+                iv.setType(ClickAbleImageView.TYPE_LONGIMAGE);
+            Bitmap returnBm = toTransform;
+            if (h > w) {
+                returnBm = Bitmap.createBitmap(toTransform, 0, 0, w, w);
+            }
+
+            if (returnBm != toTransform) {
+                toTransform.recycle();
+            }
+
+            return returnBm;
         }
 
         @Override

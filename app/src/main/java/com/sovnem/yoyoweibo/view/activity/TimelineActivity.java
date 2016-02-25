@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.sina.weibo.sdk.openapi.models.StatusList;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.view.adapter.StatusAdapter;
 
 public class TimelineActivity extends BaseActivity {
     private RecyclerView recyclerView;
@@ -23,9 +21,6 @@ public class TimelineActivity extends BaseActivity {
     }
 
     private void showData(String s) {
-        StatusList statuss = StatusList.parse(s);
-        StatusAdapter adapter = new StatusAdapter(this, statuss.statusList);
-        recyclerView.setAdapter(adapter);
     }
 
     private void initView() {

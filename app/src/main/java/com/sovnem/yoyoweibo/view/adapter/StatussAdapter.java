@@ -2,7 +2,6 @@ package com.sovnem.yoyoweibo.view.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.sina.weibo.sdk.openapi.models.Status;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
 import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,11 +119,11 @@ public class StatussAdapter extends BaseAdapter {
                 .attitudes_count));
         vh.tvComments.setText((status.comments_count == 0) ? "评论" : (status
                 .comments_count + ""));
-        Picasso.with(context).load(status.user.profile_image_url).into(vh
+        Glide.with(context).load(status.user.profile_image_url).into(vh
                 .ivHead);
         if (status.pic_urls != null && status.pic_urls.size() > 0) {//主微博带的图片
             vh.imgsLayout.setVisibility(View.VISIBLE);
-            showImgs(vh.imgs, status.pic_urls);
+            showImgs(vh.imgs, status.pic_urls, vh);
         }
         Status extraStatus = status.retweeted_status;
         if (extraStatus != null) {//如果是引用的别人的微博
@@ -135,7 +132,7 @@ public class StatussAdapter extends BaseAdapter {
             if (extraStatus.pic_urls != null && extraStatus.pic_urls.size() >
                     0) {
                 vh.extraImgLayout.setVisibility(View.VISIBLE);
-                showImgs(vh.extraImgs, extraStatus.pic_urls);
+                showImgs(vh.extraImgs, extraStatus.pic_urls, vh);
             }
         }
 
@@ -147,39 +144,29 @@ public class StatussAdapter extends BaseAdapter {
      *
      * @param imgsLayout
      * @param pic_urls
+     * @param vh
      */
     private void showImgs(MultiImageViewGroup imgsLayout, ArrayList<String>
-            pic_urls) {
-        //TODO: showimage的时候其实新建了很多的imageview对象
-
-        if (null != imgsLayout) {//如果是在重用layout
-
-        }
+            pic_urls, ViewHolder vh) {
 
         int count = pic_urls.size();
         ClickAbleImageView iv;
-        for (String url : pic_urls) {
-            boolean isGif = url.toLowerCase().endsWith(".gif");
-            iv = new ClickAbleImageView(context, isGif ? ClickAbleImageView
-                    .TYPE_GIF : ClickAbleImageView.TYPE_DEFAULT);
+        for (int i = 0; i < count; i++) {
+            String url = pic_urls.get(i);
+            iv = vh.ivs.get(i);
+            iv.setType(ClickAbleImageView.TYPE_DEFAULT);
+            confirmImageType(iv, url);
+            iv.setImageResource(-1);
+
             imgsLayout.addView(iv);
             url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "bmiddle");
-
-
-            if (isGif) {
-                Picasso.with(context).load(url).error(R.mipmap.face).transform
-                        (new CropTransformation(iv)).into(iv);
-            } else {
-                Glide.with(context).load(url).error(R.mipmap.face).dontAnimate().into(iv);
-            }
-
-
-//            if (count == 1) {
-//                Glide.with(context).load(url).transform(new CropTranslation(context)).into(iv);
-//            } else {
-//                Glide.with(context).load(url).into(iv);
-//            }
+            Glide.with(context).load(url).dontAnimate().transform(new MyBitmapTransform(context, iv)).thumbnail(0.7f).into(iv);
         }
+    }
+
+    private void confirmImageType(ClickAbleImageView iv, String url) {
+        boolean isGif = url.toLowerCase().endsWith(".gif");
+        iv.setType(isGif ? ClickAbleImageView.TYPE_GIF : ClickAbleImageView.TYPE_DEFAULT);
     }
 
     public void addOldStatuses(ArrayList<Status> statusList) {
@@ -188,22 +175,21 @@ public class StatussAdapter extends BaseAdapter {
     }
 
 
-    class CropTranslation extends BitmapTransformation {
+    class MyBitmapTransform extends BitmapTransformation {
+        ClickAbleImageView iv;
 
-        public CropTranslation(Context context) {
+        public MyBitmapTransform(Context context, ClickAbleImageView imageView) {
             super(context);
+            this.iv = imageView;
         }
 
         @Override
         protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int
                 outWidth, int outHeight) {
-            float scale = outWidth * 1.0f / toTransform.getWidth();
-            Matrix m = new Matrix();
-            m.postScale(scale, scale);
-            Bitmap re = Bitmap.createBitmap(toTransform, 0, 0, toTransform.getWidth(),
-                    toTransform.getHeight(), m, true);
-            toTransform.recycle();
-            return re;
+            int w = toTransform.getWidth();
+            int h = toTransform.getHeight();
+            iv.setType(h >= w * 2 ? ClickAbleImageView.TYPE_LONGIMAGE : ClickAbleImageView.TYPE_DEFAULT);
+            return toTransform;
         }
 
         @Override
@@ -212,36 +198,6 @@ public class StatussAdapter extends BaseAdapter {
         }
     }
 
-
-    /**
-     * 如果是长图
-     * 截取图片的上边部分
-     */
-    private class CropTransformation implements Transformation {
-        private ClickAbleImageView iv;
-
-        public CropTransformation(ClickAbleImageView iv) {
-            this.iv = iv;
-        }//bitmap转换器
-
-        @Override
-        public Bitmap transform(Bitmap source) {
-            int h = source.getHeight();
-            int w = source.getWidth();
-            if (h / w >= 3) {//如果太高 就是长图  截取w，2w部分
-                Bitmap b = Bitmap.createBitmap(source, 0, 0, w, 2 * w);
-                source.recycle();
-                iv.setType(ClickAbleImageView.TYPE_LONGIMAGE);
-                return b;
-            }
-            return source;
-        }
-
-        @Override
-        public String key() {
-            return "square()";
-        }
-    }
 
     /**
      * 转换日期格式
@@ -346,6 +302,10 @@ public class StatussAdapter extends BaseAdapter {
                 .imageviews_status_extraimgs);
         vh.imgsLayout = itemView.findViewById(R.id.layout_imgs);
         vh.extraImgLayout = vh.extra.findViewById(R.id.layout_extraimgs);
+        vh.ivs = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            vh.ivs.add(new ClickAbleImageView(context));
+        }
         itemView.setTag(vh);
     }
 
@@ -365,6 +325,7 @@ public class StatussAdapter extends BaseAdapter {
         View extra;//引用微博的布局
         View imgsLayout;//当前微博的图片
         View extraImgLayout;//引用微博中的图片
+        ArrayList<ClickAbleImageView> ivs;//用来缓存multiimageviewgroup里的imageview
     }
 
 

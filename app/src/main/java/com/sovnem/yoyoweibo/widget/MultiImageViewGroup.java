@@ -57,15 +57,11 @@ import android.view.ViewGroup;
  * Created by 赵军辉 on 2016/1/4.
  */
 public class MultiImageViewGroup extends
-        ViewGroup {
+                                 ViewGroup {
     /**
      * 每个图片之间的缝隙宽度
      */
     private final int SPACE = 10;
-    /**
-     * 屏幕宽度
-     */
-    private int screenW;
     private int childW;//单个子控件的宽度
 
     public MultiImageViewGroup(Context context) {
@@ -90,8 +86,6 @@ public class MultiImageViewGroup extends
     }
 
     private void init(Context context) {
-        screenW = context.getResources()
-                .getDisplayMetrics().widthPixels;
     }
 
     /**
@@ -217,13 +211,8 @@ public class MultiImageViewGroup extends
                     (count > 3 ? (childW * 2 +
                             SPACE) : childW);
         }
-        if (count == 1) {
-            setMeasuredDimension(finalSizew,
-                    finalSizeh);
-        } else {
-            setMeasuredDimension(finalSizew,
-                    finalSizeh);
-        }
+        setMeasuredDimension(finalSizew,
+                finalSizeh);
     }
 
 

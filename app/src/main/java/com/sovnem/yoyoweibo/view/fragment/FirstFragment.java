@@ -11,15 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.sina.weibo.sdk.exception.WeiboException;
-import com.sina.weibo.sdk.net.RequestListener;
-import com.sina.weibo.sdk.openapi.models.Status;
-import com.sina.weibo.sdk.openapi.models.StatusList;
+import com.google.gson.Gson;
+import com.sovnem.data.bean.Status;
+import com.sovnem.data.bean.StatusList;
+import com.sovnem.data.net.RequestListener;
 import com.sovnem.data.utils.L;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.model.WeiboProvider;
 import com.sovnem.yoyoweibo.utils.T;
-import com.sovnem.yoyoweibo.view.adapter.StatussAdapter;
+import com.sovnem.yoyoweibo.view.adapter.StatusAdapter;
 import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
@@ -32,6 +32,8 @@ import java.util.ArrayList;
  * <p/>
  * <p/>
  * 加载更多是
+ * 第一次获取之后记录最老的id
+ * 分页加载从这个id之前导数加载各个页的数据
  */
 public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TITLE = "首页";
@@ -39,8 +41,9 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     private SwipeRefreshLayout srl;
     private ArrayList<Status> statuses;
     private String newest, oldest;//最新微博和最老微博的id
-    private StatussAdapter adapter;
+    private StatusAdapter adapter;
     private int preLast;//记录上一次
+    private int page = 1;//
 
     @Override
     public void setHead(TextView title) {
@@ -84,13 +87,18 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
                 isLoading = true;
                 WeiboProvider.getFriendsWeibos(getActivity(), new RequestListener() {
                     @Override
-                    public void onComplete(String s) {
-                        showNewData(s);
+                    public void onSuccess(String ts) {
+                        showNewData(ts);
                         isLoading = false;
                     }
 
                     @Override
-                    public void onWeiboException(WeiboException e) {
+                    public void onFailed(String failMsg) {
+                        isLoading = false;
+                    }
+
+                    @Override
+                    public void onNetError() {
                         isLoading = false;
                     }
                 });
@@ -100,16 +108,18 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private void showNewData(String s) {
         srl.setRefreshing(false);
-        StatusList statuss = StatusList.parse(s);
-        statuses.addAll(0, statuss.statusList);
+        Gson gson = new Gson();
+        StatusList statuss = gson.fromJson(s, StatusList.class);
+        statuses.addAll(0, statuss.statuses);
         recordId();
-        adapter = new StatussAdapter(getActivity(), statuss.statusList);
+        adapter = new StatusAdapter(getActivity(), statuses);
         mlv.setAdapter(adapter);
         mlv.setOnScrollListener(scrollListener);
     }
 
     /**
      * 记录 微博id
+     * 只记录一次
      */
     private void recordId() {
         newest = statuses.get(0).id;
@@ -124,15 +134,20 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         isLoading = true;
         WeiboProvider.getFriendsWeibosAfter(newest, getActivity(), new RequestListener() {
             @Override
-            public void onComplete(String s) {
+            public void onSuccess(String s) {
                 isLoading = false;
                 addNewestStatus(s);
             }
 
             @Override
-            public void onWeiboException(WeiboException e) {
+            public void onFailed(String failMsg) {
                 isLoading = false;
-                L.i(e.getMessage());
+                L.i(failMsg);
+            }
+
+            @Override
+            public void onNetError() {
+                isLoading = false;
             }
         });
     }
@@ -144,16 +159,16 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     private void addNewestStatus(String s) {
         srl.setRefreshing(false);
-        StatusList list = StatusList.parse(s);
+        StatusList list = new Gson().fromJson(s, StatusList.class);
 
 
-        if (list.statusList == null || list.statusList.size() == 0) {
+        if (list.statuses == null || list.statuses.size() == 0) {
             T.show(getActivity(), "没有新微博", Toast.LENGTH_LONG);
             return;
         }
-        newest = list.statusList.get(0).id;
+        newest = list.statuses.get(0).id + "";
         if (adapter != null) {
-            adapter.addNewStatus(list.statusList);
+            adapter.addNewStatus(list.statuses);
         }
     }
 
@@ -186,23 +201,29 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     };
 
     /**
-     * 加载更多
+     * 加载旧的微博
      */
     private void loadMore() {
         isLoading = true;
         mlv.setStatusLoading(true);
-        WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), new RequestListener() {
+        WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), page, new RequestListener() {
             @Override
-            public void onComplete(String s) {
+            public void onSuccess(String s) {
                 L.d("请求成功返回：" + s);
                 addOldStatuss(s);
+                mlv.setStatusLoading(false);
+                isLoading = false;
+                page++;
+            }
+
+            @Override
+            public void onFailed(String failMsg) {
                 mlv.setStatusLoading(false);
                 isLoading = false;
             }
 
             @Override
-            public void onWeiboException(WeiboException e) {
-                mlv.setStatusLoading(false);
+            public void onNetError() {
                 isLoading = false;
             }
         });
@@ -210,13 +231,14 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private void addOldStatuss(String s) {
 //        L.i("加载更多返回值:" + s);
-        StatusList list = StatusList.parse(s);
-        if (list.statusList == null) {
+        StatusList list = new Gson().fromJson(s, StatusList.class);
+        if (list.statuses == null) {
             return;
         }
-        L.i("返回的个数是:" + list.statusList.size());
-        list.statusList.remove(0);
-        adapter.addOldStatuses(list.statusList);
-        oldest = list.statusList.get(list.statusList.size() - 1).id;
+        L.i("返回的个数是:" + list.statuses.size());
+        if (page == 1)
+            list.statuses.remove(0);
+
+        adapter.addOldStatuses(list.statuses);
     }
 }

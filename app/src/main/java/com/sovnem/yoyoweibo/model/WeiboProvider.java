@@ -2,8 +2,8 @@ package com.sovnem.yoyoweibo.model;
 
 import android.content.Context;
 
-import com.sina.weibo.sdk.net.RequestListener;
 import com.sovnem.data.biz.WeiboManager;
+import com.sovnem.data.net.RequestListener;
 
 /**
  * a provider of anything about weibo
@@ -32,9 +32,9 @@ public class WeiboProvider {
         wm.getFriendTimelineAfter(Long.parseLong(newest), requestListener);
     }
 
-    public static void getFriendsWeibosBefore(String max, Context context, RequestListener requestListener) {
+    public static void getFriendsWeibosBefore(String max, Context context, int page,RequestListener requestListener) {
         WeiboManager wm = new WeiboManager(context);
-        wm.getFriendTimelineBefore(Long.parseLong(max), requestListener);
+        wm.getFriendTimelineBefore(Long.parseLong(max),page, requestListener);
     }
 
 }

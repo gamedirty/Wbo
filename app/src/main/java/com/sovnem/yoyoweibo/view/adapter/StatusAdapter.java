@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.sina.weibo.sdk.openapi.models.Status;
+import com.sovnem.data.bean.Status;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
 import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;
@@ -35,7 +35,7 @@ import java.util.Locale;
  * 微博适配器
  * Created by sovnem on 16/1/21.
  */
-public class StatussAdapter extends BaseAdapter {
+public class StatusAdapter extends BaseAdapter {
 
     private SimpleDateFormat sdf, sdf1, sdf2;
     private List<Status> statuses;
@@ -43,7 +43,7 @@ public class StatussAdapter extends BaseAdapter {
     private int screenW;
     private Drawable headBack;
 
-    public StatussAdapter(Context context, List statuses) {
+    public StatusAdapter(Context context, List statuses) {
         this.statuses = statuses;
         this.context = context;
         sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
@@ -54,7 +54,7 @@ public class StatussAdapter extends BaseAdapter {
         headBack = new ColorDrawable(Color.parseColor("#dfdfdf"));
     }
 
-    public void addNewStatus(ArrayList<Status> news) {
+    public void addNewStatus(List<Status> news) {
         statuses.addAll(0, news);
         notifyDataSetChanged();
     }
@@ -153,33 +153,42 @@ public class StatussAdapter extends BaseAdapter {
      * @param pic_urls
      * @param vh
      */
-    private void showImgs(MultiImageViewGroup imgsLayout, ArrayList<String>
+    private void showImgs(MultiImageViewGroup imgsLayout, List<Status.PicUrl>
             pic_urls, ViewHolder vh) {
 
         int count = pic_urls.size();
         ClickAbleImageView iv;
         for (int i = 0; i < count; i++) {
-            String url = pic_urls.get(i);
+            String url = pic_urls.get(i).thumbnail_pic;
             iv = vh.ivs.get(i);
             iv.setType(ClickAbleImageView.TYPE_DEFAULT);
-            confirmImageType(iv, url);
+            boolean isGif = url.toLowerCase().endsWith(".gif");
+            confirmImageType(iv, isGif);
             iv.setImageResource(-1);
 
             imgsLayout.addView(iv);
             url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "large");
 
-            Glide.with(context).load(url).asBitmap().dontAnimate().transform(new MyBitmapTransform(context, iv, count)).//
-                    override(count == 1 ? (screenW / 3 * 2) : (screenW / 3), count == 1 ? (screenW / 3 * 2) : (screenW / 3)).//
-                    thumbnail(0.5f).into(iv);
+            if (isGif) {
+                Glide.with(context).load(url).asBitmap().dontAnimate()
+                        .//
+                        thumbnail(0.5f).into(iv);
+            } else {
+                if (count == 1) {
+                    Glide.with(context).load(url).dontAnimate().transform(new MyBitmapTransform(context, iv)).into(iv);
+                } else {
+                    Glide.with(context).load(url).dontAnimate().into(iv);
+                }
+            }
+
         }
     }
 
-    private void confirmImageType(ClickAbleImageView iv, String url) {
-        boolean isGif = url.toLowerCase().endsWith(".gif");
+    private void confirmImageType(ClickAbleImageView iv, boolean isGif) {
         iv.setType(isGif ? ClickAbleImageView.TYPE_GIF : ClickAbleImageView.TYPE_DEFAULT);
     }
 
-    public void addOldStatuses(ArrayList<Status> statusList) {
+    public void addOldStatuses(List<Status> statusList) {
         statuses.addAll(statusList);
         notifyDataSetChanged();
     }
@@ -187,12 +196,10 @@ public class StatussAdapter extends BaseAdapter {
 
     class MyBitmapTransform extends BitmapTransformation {
         ClickAbleImageView iv;
-        int count;
 
-        public MyBitmapTransform(Context context, ClickAbleImageView imageView, int count) {
+        public MyBitmapTransform(Context context, ClickAbleImageView imageView) {
             super(context);
             this.iv = imageView;
-            this.count = count;
         }
 
         @Override
@@ -200,7 +207,7 @@ public class StatussAdapter extends BaseAdapter {
                 outWidth, int outHeight) {
             int w = toTransform.getWidth();
             int h = toTransform.getHeight();
-            if (count == 1&&h >= w * 4)
+            if (h >= w * 4)
                 iv.setType(ClickAbleImageView.TYPE_LONGIMAGE);
             Bitmap returnBm = toTransform;
             if (h > w) {

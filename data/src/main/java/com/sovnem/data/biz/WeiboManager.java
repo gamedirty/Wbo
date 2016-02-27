@@ -2,33 +2,56 @@ package com.sovnem.data.biz;
 
 import android.content.Context;
 
-import com.sina.weibo.sdk.net.RequestListener;
-import com.sina.weibo.sdk.openapi.StatusesAPI;
 import com.sovnem.data.DataConstants;
+import com.sovnem.data.net.RequestListener;
+
+import java.util.HashMap;
 
 /**
- * a manager of weibo messages,here is all the methods about weibo you need
+ * a manager of weibo messages,here is all the methods about weibo's messages you need
  * Created by sovnem on 16/1/2.
  */
 public class WeiboManager extends BaseManager {
 
-    private StatusesAPI statusesAPI;
 
     public WeiboManager(Context context) {
         super(context);
-        statusesAPI = new StatusesAPI(context, DataConstants.APP_KEY, TokenManager.readAccessToken(context));
     }
 
+    /**
+     * 全参数请求方式
+     *
+     * @param since
+     * @param max
+     * @param page
+     * @param listener
+     */
+    public void getFriendTimeline(long since, long max, int page, RequestListener listener) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("since_id", "" + since);
+        params.put("max_id", "" + max);
+        params.put("page", "" + page);
+        String baseUrl = DataConstants.getFriends_timeline;
+        doGetRequest(params, baseUrl, listener);
+    }
+
+    /**
+     * 默认
+     *
+     * @param since
+     * @param max
+     * @param listener
+     */
     public void getFriendTimeline(long since, long max, RequestListener listener) {
-        statusesAPI.friendsTimeline(since, max, 20, 1, false, 0, false, listener);
+        getFriendTimeline(since, max, 1, listener);
     }
 
-    public void getFriendTimelineBefore(long max, RequestListener listener) {
-        statusesAPI.friendsTimeline(0, max, 20, 1, false, 0, false, listener);
+
+    public void getFriendTimelineBefore(long max, int page, RequestListener listener) {
+        getFriendTimeline(0, max, page, listener);
     }
 
     public void getFriendTimelineAfter(long since, RequestListener listener) {
-        statusesAPI.friendsTimeline(since, 0, 20, 1, false, 0, false, listener);
     }
 
 

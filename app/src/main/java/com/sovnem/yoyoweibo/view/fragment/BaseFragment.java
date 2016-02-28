@@ -18,6 +18,7 @@ import com.sovnem.yoyoweibo.R;
 public abstract class BaseFragment extends Fragment {
     private View head;
 
+    //TODO: 延迟加载 只加载一个fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

@@ -22,10 +22,6 @@ public class WoodApplication extends Application {
         DataConstants.TOKEN = tokens.getToken();
         hasLogin = !TextUtils.isEmpty(DataConstants.TOKEN);
         instance = this;
-
-//        Glide.get(this)
-//                .register(GlideUrl.class, InputStream.class,new VolleyUrlLoader.Factory(yourRequestQueue));
-//        Glide.get(this).register(GlideUrl.class,InputStream.class, ModelLoaderFactory);
     }
 
     /**

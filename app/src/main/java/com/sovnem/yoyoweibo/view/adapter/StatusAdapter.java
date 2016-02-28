@@ -135,7 +135,7 @@ public class StatusAdapter extends BaseAdapter {
         Status extraStatus = status.retweeted_status;
         if (extraStatus != null) {//如果是引用的别人的微博
             vh.extra.setVisibility(View.VISIBLE);
-            vh.tvExtraText.setText(extraStatus.text);
+            vh.tvExtraText.setText("@" + extraStatus.user.name + "：" + extraStatus.text);
             if (extraStatus.pic_urls != null && extraStatus.pic_urls.size() >
                     0) {
                 vh.extraImgLayout.setVisibility(View.VISIBLE);

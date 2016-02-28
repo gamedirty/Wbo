@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
         vpContent.setAdapter(adapter);
         SelectListener s = new SelectListener();
         vpContent.addOnPageChangeListener(s);
-        vpContent.setOffscreenPageLimit(5);
+        vpContent.setOffscreenPageLimit(1);
         rg = (RadioGroup) findViewById(R.id.rgrp_main_tabs);
         rg.setOnCheckedChangeListener(s);
     }

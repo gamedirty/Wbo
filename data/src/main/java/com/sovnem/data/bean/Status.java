@@ -52,4 +52,43 @@ public class Status {
     public static class PicUrl {
         public String thumbnail_pic;
     }
+
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "created_at='" + created_at + '\'' +
+                ", id='" + id + '\'' +
+                ", mid='" + mid + '\'' +
+                ", idstr='" + idstr + '\'' +
+                ", text='" + text + '\'' +
+                ", textLength='" + textLength + '\'' +
+                ", source_allowclick='" + source_allowclick + '\'' +
+                ", source_type='" + source_type + '\'' +
+                ", source='" + source + '\'' +
+                ", favorited=" + favorited +
+                ", truncated=" + truncated +
+                ", in_reply_to_status_id='" + in_reply_to_status_id + '\'' +
+                ", in_reply_to_user_id='" + in_reply_to_user_id + '\'' +
+                ", in_reply_to_screen_name='" + in_reply_to_screen_name + '\'' +
+                ", thumbnail_pic='" + thumbnail_pic + '\'' +
+                ", bmiddle_pic='" + bmiddle_pic + '\'' +
+                ", original_pic='" + original_pic + '\'' +
+                ", geo=" + geo +
+                ", user=" + user +
+                ", reposts_count=" + reposts_count +
+                ", comments_count=" + comments_count +
+                ", attitudes_count=" + attitudes_count +
+                ", isLongText=" + isLongText +
+                ", mlevel='" + mlevel + '\'' +
+                ", visible=" + visible +
+                ", biz_feature=" + biz_feature +
+                ", rid='" + rid + '\'' +
+                ", userType='" + userType + '\'' +
+                ", retweeted_status=" + retweeted_status +
+                ", pic_urls=" + pic_urls +
+                ", darwin_tags=" + darwin_tags +
+                ", hot_weibo_tags=" + hot_weibo_tags +
+                '}';
+    }
 }

@@ -6,6 +6,7 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
  * Created by sovnem on 16/1/1.
  */
 public class DataConstants {
+    public static final int PAGE_COUNT = 20;
     public static String TOKEN = "";//用来储存token
     public static final String APP_KEY = "1541309697";//appkey
     public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";//重定向URL

@@ -64,7 +64,7 @@ public class ClickAbleImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (pressed) {
-            canvas.drawColor(Color.parseColor("#7a000000"));
+            canvas.drawColor(Color.parseColor("#1f000000"));
         }
         switch (type) {
             case TYPE_GIF:
@@ -84,13 +84,6 @@ public class ClickAbleImageView extends ImageView {
         this.w = w;
         this.h = h;
     }
-
-//    @Override
-//    protected void dispatchSetPressed(boolean pressed) {
-//        super.dispatchSetPressed(pressed);
-//        this.pressed = pressed;
-//        invalidate();
-//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

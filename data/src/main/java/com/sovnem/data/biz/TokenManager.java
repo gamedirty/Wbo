@@ -73,6 +73,17 @@ public class TokenManager {
     }
 
     /**
+     * 获取uid
+     *
+     * @param context
+     * @return
+     */
+    public static String getUid(Context context) {
+        Oauth2AccessToken token = readAccessToken(context);
+        return token.getUid();
+    }
+
+    /**
      * 清空 SharedPreferences 中 Token信息。
      *
      * @param context 应用程序上下文环境

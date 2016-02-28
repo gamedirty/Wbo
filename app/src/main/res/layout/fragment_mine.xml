@@ -9,9 +9,21 @@
         layout="@layout/layout_global_head"
         ></include>
 
-    <TextView
+    <com.sovnem.yoyoweibo.widget.YOYORefreshLayout
+        android:id="@+id/swiperefresh_mine_srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="hello 我的相关"/>
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+        </ScrollView>
+
+    </com.sovnem.yoyoweibo.widget.YOYORefreshLayout>
 </LinearLayout>

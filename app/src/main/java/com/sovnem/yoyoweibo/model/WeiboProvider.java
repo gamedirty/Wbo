@@ -27,14 +27,29 @@ public class WeiboProvider {
         wm.getFriendTimeline(0, 0, requestListener);
     }
 
+    /**
+     * 获取最新的微博  即比指定的id小的微博
+     *
+     * @param newest
+     * @param context
+     * @param requestListener
+     */
     public static void getFriendsWeibosAfter(String newest, Context context, RequestListener requestListener) {
         WeiboManager wm = new WeiboManager(context);
         wm.getFriendTimelineAfter(Long.parseLong(newest), requestListener);
     }
 
-    public static void getFriendsWeibosBefore(String max, Context context, int page,RequestListener requestListener) {
+    /**
+     * 获取指定id之前的微博
+     *
+     * @param max
+     * @param context
+     * @param page
+     * @param requestListener
+     */
+    public static void getFriendsWeibosBefore(String max, Context context, int page, RequestListener requestListener) {
         WeiboManager wm = new WeiboManager(context);
-        wm.getFriendTimelineBefore(Long.parseLong(max),page, requestListener);
+        wm.getFriendTimelineBefore(Long.parseLong(max), page, requestListener);
     }
 
 }

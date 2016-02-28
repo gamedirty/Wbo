@@ -16,41 +16,31 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * 主要的网络请求业务类 的基类
  * Created by sovnem on 16/1/3.
  */
 public class BaseManager {
     private Context context;
     private RequestQueue queue;
 
-    public BaseManager(Context context) {
+    protected BaseManager(Context context) {
         this.context = context;
         if (null == queue) queue = Volley.newRequestQueue(context);
     }
 
-    /**
-     * 设置基础的配置参数
-     *
-     * @param params
-     */
-    protected void initBaseParams(HashMap params) {
-        params.put("source", "" + DataConstants.APP_KEY);
-        params.put("count", 20);
+    protected void addTokenTo(HashMap params) {
         params.put("access_token", "" + DataConstants.TOKEN);
-        params.put("base_app", 0);
-        params.put("feature", 0);//过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
-        params.put("trim_user", NetUtils.isWifi(context) ? 0 : 1);//如果是WiFi返回user的完整字段，否则只返回userid
-        L.i("token:" + DataConstants.TOKEN);
     }
 
+
     /**
-     * 将参数组装成请求连接
+     * 将参数和基础URL组装成请求连接
      *
      * @param params
      * @param requestUrl
      * @return
      */
-    public String makeGetUrl(HashMap params, String requestUrl) {
-        initBaseParams(params);
+    protected String makeGetUrl(HashMap params, String requestUrl) {
         StringBuilder sb = new StringBuilder(requestUrl);
         Set<String> keys = params.keySet();
         sb.append("?");
@@ -58,19 +48,20 @@ public class BaseManager {
             sb.append(key + "").append("=").append("" + params.get(key)).append("&");
         }
         String result = sb.substring(0, sb.length() - 1);
-        L.i("请求地址:" + result);
+
         return result;
     }
 
     /**
-     * 通用get请求
+     * 请求微博获取相关的请求
      *
      * @param params
      * @param baseUrl
      * @param listener
      */
-    public void doGetRequest(HashMap<String, String> params, String baseUrl, final RequestListener listener) {
+    protected void doGetRequest(HashMap<String, String> params, String baseUrl, final RequestListener listener) {
         String url = makeGetUrl(params, baseUrl);
+        L.i("请求地址:" + url);
         if (!isNetEnable()) {
             listener.onNetError();
             return;
@@ -78,35 +69,24 @@ public class BaseManager {
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                L.i("请求结果:" + response);
-//                try {
-//                    JSONObject js = new JSONObject(response);
-//                    String list = js.getString("statuses");
-//                    Gson g = new Gson();
-//                    StatusList l = g.fromJson(response,StatusList.class);
-//
-//                    L.i("返回微博的个数:" + l.statuses.size());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
                 listener.onSuccess(response);
+                L.i("请求成功:" + response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listener.onFailed(error.getMessage());
+                L.e("请求失败:" + error.getMessage());
             }
         });
         queue.add(request);
-
     }
 
-
-    public void doPostRequest() {
-
-    }
-
-    public boolean isNetEnable() {
+    protected boolean isNetEnable() {
         return NetUtils.isConnected(context);
+    }
+
+    protected boolean isWifi() {
+        return NetUtils.isWifi(context);
     }
 }

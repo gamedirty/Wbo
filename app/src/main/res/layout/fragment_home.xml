@@ -10,17 +10,18 @@
         ></include>
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
+    <com.sovnem.yoyoweibo.widget.YOYORefreshLayout
         android:id="@+id/srfl_firstpage_refresh"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.sovnem.yoyoweibo.widget.LoadMoreListview
             android:id="@+id/listview_first_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:divider="@null"
+            android:fastScrollEnabled="true"/>
+    </com.sovnem.yoyoweibo.widget.YOYORefreshLayout>
 
 
 </LinearLayout>

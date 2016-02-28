@@ -66,7 +66,6 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void initViews() {
         mlv = (LoadMoreListview) getView().findViewById(R.id.listview_first_list);
         srl = (SwipeRefreshLayout) getView().findViewById(R.id.srfl_firstpage_refresh);
-        srl.setColorSchemeColors(getResources().getColor(R.color.globalcolornormal), getResources().getColor(R.color.globalcolorpress));
         srl.setOnRefreshListener(this);
     }
 
@@ -141,7 +140,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
 
             @Override
             public void onFailed(String failMsg) {
-                isLoading = false;
+
                 L.i(failMsg);
             }
 
@@ -160,8 +159,6 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     private void addNewestStatus(String s) {
         srl.setRefreshing(false);
         StatusList list = new Gson().fromJson(s, StatusList.class);
-
-
         if (list.statuses == null || list.statuses.size() == 0) {
             T.show(getActivity(), "没有新微博", Toast.LENGTH_LONG);
             return;
@@ -175,16 +172,18 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     boolean canLoad;
     private boolean isLoading;
+    private boolean noMore;
     AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
 
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
+
             if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
                 Glide.with(getActivity()).pauseRequests();
             } else {
                 Glide.with(getActivity()).resumeRequests();
             }
-            if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+            if (!noMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                     && !isLoading && canLoad) {
                 loadMore();
             }
@@ -205,20 +204,20 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     private void loadMore() {
         isLoading = true;
-        mlv.setStatusLoading(true);
+        mlv.setStatusLoading();
         WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), page, new RequestListener() {
             @Override
             public void onSuccess(String s) {
                 L.d("请求成功返回：" + s);
                 addOldStatuss(s);
-                mlv.setStatusLoading(false);
+                mlv.setStatusLoading();
                 isLoading = false;
                 page++;
             }
 
             @Override
             public void onFailed(String failMsg) {
-                mlv.setStatusLoading(false);
+                mlv.setStatusLoading();
                 isLoading = false;
             }
 
@@ -233,12 +232,17 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
 //        L.i("加载更多返回值:" + s);
         StatusList list = new Gson().fromJson(s, StatusList.class);
         if (list.statuses == null) {
+            mlv.setStatusLoadMoreError();
             return;
         }
-        L.i("返回的个数是:" + list.statuses.size());
+        int count = list.statuses.size();
+        L.i("加载了更多的:" + count);
         if (page == 1)
             list.statuses.remove(0);
-
         adapter.addOldStatuses(list.statuses);
+        if (count == 0) {
+            mlv.setStatusNomore();
+            noMore = true;
+        }
     }
 }

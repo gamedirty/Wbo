@@ -210,7 +210,6 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
             public void onSuccess(String s) {
                 L.d("请求成功返回：" + s);
                 addOldStatuss(s);
-                mlv.setStatusLoading();
                 isLoading = false;
                 page++;
             }

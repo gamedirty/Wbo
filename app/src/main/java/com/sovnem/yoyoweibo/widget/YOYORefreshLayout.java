@@ -22,7 +22,7 @@ public class YOYORefreshLayout extends SwipeRefreshLayout {
 
     private void init() {
         setColorSchemeColors(getResources().getColor(R.color.globalcolornormal), getResources().getColor(R.color.globalcolorpress));
-        setProgressViewEndTarget(true, getProgressCircleDiameter());
+        setProgressViewEndTarget(true, 150);
     }
 
 }

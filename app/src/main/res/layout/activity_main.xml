@@ -43,10 +43,11 @@
             android:text="消息"/>
 
         <ImageButton
+            android:id="@+id/imagebutton_main_newtimeline"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/selector_main_add"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/selector_main_add"/>
 
         <RadioButton
             android:id="@+id/rbtn_main_explor"

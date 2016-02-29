@@ -19,16 +19,16 @@ import java.util.Set;
  * 主要的网络请求业务类 的基类
  * Created by sovnem on 16/1/3.
  */
-public class BaseManager {
+class BaseManager {
     private Context context;
     private RequestQueue queue;
 
-    protected BaseManager(Context context) {
+    BaseManager(Context context) {
         this.context = context;
         if (null == queue) queue = Volley.newRequestQueue(context);
     }
 
-    protected void addTokenTo(HashMap params) {
+    void addTokenTo(HashMap params) {
         params.put("access_token", "" + DataConstants.TOKEN);
     }
 
@@ -40,16 +40,15 @@ public class BaseManager {
      * @param requestUrl
      * @return
      */
-    protected String makeGetUrl(HashMap params, String requestUrl) {
+    private String makeGetUrl(HashMap params, String requestUrl) {
         StringBuilder sb = new StringBuilder(requestUrl);
         Set<String> keys = params.keySet();
         sb.append("?");
         for (String key : keys) {
             sb.append(key + "").append("=").append("" + params.get(key)).append("&");
         }
-        String result = sb.substring(0, sb.length() - 1);
 
-        return result;
+        return sb.substring(0, sb.length() - 1);
     }
 
     /**
@@ -59,7 +58,7 @@ public class BaseManager {
      * @param baseUrl
      * @param listener
      */
-    protected void doGetRequest(HashMap<String, String> params, String baseUrl, final RequestListener listener) {
+    void doGetRequest(HashMap<String, String> params, String baseUrl, final RequestListener listener) {
         String url = makeGetUrl(params, baseUrl);
         L.i("请求地址:" + url);
         if (!isNetEnable()) {
@@ -82,11 +81,11 @@ public class BaseManager {
         queue.add(request);
     }
 
-    protected boolean isNetEnable() {
+    private boolean isNetEnable() {
         return NetUtils.isConnected(context);
     }
 
-    protected boolean isWifi() {
+    boolean isWifi() {
         return NetUtils.isWifi(context);
     }
 }

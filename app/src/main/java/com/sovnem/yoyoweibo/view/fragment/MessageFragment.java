@@ -33,8 +33,8 @@ public class MessageFragment extends BaseFragment {
     }
 
     public static MessageFragment getInstance() {
-        MessageFragment ff = new MessageFragment();
-        return ff;
+
+        return new MessageFragment();
     }
 
     @Nullable

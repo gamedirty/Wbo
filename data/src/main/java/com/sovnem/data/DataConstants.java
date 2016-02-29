@@ -16,7 +16,7 @@ public class DataConstants {
                     + "follow_app_official_microblog," + "invitation_write";//权限相关
 
 
-    public static final String BASE_URL = "https://api.weibo.com/2/";//基础URL
+    private static final String BASE_URL = "https://api.weibo.com/2/";//基础URL
     public static Oauth2AccessToken token;
     /**
      * 微博相关接口

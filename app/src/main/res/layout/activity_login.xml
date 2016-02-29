@@ -13,17 +13,7 @@
         android:onClick="login"
         android:text="登陆"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="getPublicWeibos"
-        android:text="获取公共微博"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="getFriendWeibos"
-        android:text="获取好友列表"/>
 
     <Button
         android:layout_width="match_parent"

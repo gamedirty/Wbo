@@ -16,7 +16,6 @@ import com.sovnem.yoyoweibo.R;
  * Created by 赵军辉 on 2015/12/31.
  */
 public abstract class BaseFragment extends Fragment {
-    private View head;
 
     //TODO: 延迟加载 只加载一个fragment
     @Override
@@ -28,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void initHead() {
-        head = getView().findViewById(R.id.head);
+        View head = getView().findViewById(R.id.head);
         if (head == null) {
             try {
                 throw new Exception("fragment的布局应该包含名为head的布局");
@@ -44,13 +43,13 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    public void setHead(TextView title) {
+    protected void setHead(TextView title) {
 
     }
 
-    public abstract void initViews();
+    protected abstract void initViews();
 
-    public abstract void initData();
+    protected abstract void initData();
 
 
 }

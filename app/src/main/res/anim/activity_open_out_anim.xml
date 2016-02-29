@@ -8,5 +8,5 @@
         android:interpolator="@android:anim/decelerate_interpolator"
         android:toXDelta="-100%p"
         android:toYDelta="0"
-        ></translate>
+        />
 </set>

@@ -39,10 +39,13 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <!--
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false">
         </service>
+
+        -->
 
         <activity android:name=".view.activity.TimelineActivity">
         </activity>

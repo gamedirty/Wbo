@@ -7,7 +7,7 @@
     <include
         android:id="@+id/head"
         layout="@layout/layout_global_head"
-        ></include>
+        />
 
 
     <com.sovnem.yoyoweibo.widget.YOYORefreshLayout

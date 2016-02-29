@@ -44,8 +44,8 @@ public class MineFragment extends BaseFragment {
     }
 
     public static MineFragment getInstance() {
-        MineFragment ff = new MineFragment();
-        return ff;
+
+        return new MineFragment();
     }
 
 
@@ -106,7 +106,7 @@ public class MineFragment extends BaseFragment {
         SimpleTarget<Bitmap> target = new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                flCover.setBackground(new BitmapDrawable(resource));
+                flCover.setBackground(new BitmapDrawable(getResources(), resource));
             }
         };
         Glide.with(getActivity()).load(user.cover_image_phone).asBitmap().into(target);

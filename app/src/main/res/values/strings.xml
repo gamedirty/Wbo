@@ -4,5 +4,10 @@
     <string name="auth_failed">授权失败</string>
     <string name="auth_success">授权成功</string>
     <string name="from_statusitem">来自</string>
+    <string name="firstpage">首页</string>
+    <string name="message">消息</string>
+    <string name="explore">发现</string>
+    <string name="mine">我的</string>
+    <string name="loading">加载中请稍等</string>
 
 </resources>

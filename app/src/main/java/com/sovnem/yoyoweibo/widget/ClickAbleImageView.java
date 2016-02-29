@@ -25,11 +25,8 @@ public class ClickAbleImageView extends ImageView {
     private Bitmap gif, cut;
     private Paint bmPaint;
 
-    public ClickAbleImageView(Context context) {
-        this(context, TYPE_DEFAULT);
-    }
 
-    public ClickAbleImageView(Context context, int type) {
+    public ClickAbleImageView(Context context) {
         super(context);
         setScaleType(ScaleType.CENTER_CROP);
         setClickable(true);

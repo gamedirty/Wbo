@@ -10,13 +10,13 @@
     <com.sovnem.yoyoweibo.widget.CannotScrollViewpager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></com.sovnem.yoyoweibo.widget.CannotScrollViewpager>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#cfcfcf"></View>
+        android:background="#cfcfcf"/>
 
     <RadioGroup
         android:id="@+id/rgrp_main_tabs"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:drawableTop="@drawable/selector_maintab_home"
-            android:text="首页"/>
+            android:text="@string/firstpage"/>
 
         <RadioButton
             android:id="@+id/rbtn_main_message"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_maintab_message"
-            android:text="消息"/>
+            android:text="@string/message"/>
 
         <ImageButton
             android:id="@+id/imagebutton_main_newtimeline"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_maintab_explo"
-            android:text="发现"
+            android:text="@string/explore"
             />
 
         <RadioButton
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_maintab_mine"
-            android:text="我的"/>
+            android:text="@string/mine"/>
 
     </RadioGroup>
 

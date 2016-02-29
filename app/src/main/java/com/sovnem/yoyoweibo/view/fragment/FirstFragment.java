@@ -52,8 +52,8 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
     public static FirstFragment getInstance() {
-        FirstFragment ff = new FirstFragment();
-        return ff;
+
+        return new FirstFragment();
     }
 
     @Nullable
@@ -192,10 +192,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-            canLoad = false;
-            if ((firstVisibleItem + visibleItemCount) >= totalItemCount) {
-                canLoad = true;
-            }
+            canLoad = (firstVisibleItem + visibleItemCount) >= totalItemCount;
         }
     };
 

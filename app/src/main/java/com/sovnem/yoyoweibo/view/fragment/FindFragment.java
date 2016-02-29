@@ -17,8 +17,7 @@ public class FindFragment extends BaseFragment {
     private static final String TITLE = "发现";
 
     public static FindFragment getInstance() {
-        FindFragment ff = new FindFragment();
-        return ff;
+        return new FindFragment();
     }
 
     @Nullable

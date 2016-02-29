@@ -2,9 +2,6 @@ package com.sovnem.yoyoweibo.view.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -40,18 +37,14 @@ public class StatusAdapter extends BaseAdapter {
     private SimpleDateFormat sdf, sdf1, sdf2;
     private List<Status> statuses;
     private Context context;
-    private int screenW;
-    private Drawable headBack;
 
     public StatusAdapter(Context context, List statuses) {
         this.statuses = statuses;
         this.context = context;
         sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
         //MMM dd hh:mm:ss Z yyyy
-        sdf1 = new SimpleDateFormat("HH:mm:ss");
-        sdf2 = new SimpleDateFormat("MM月dd日 HH:mm:ss");
-        screenW = context.getResources().getDisplayMetrics().widthPixels;
-        headBack = new ColorDrawable(Color.parseColor("#dfdfdf"));
+        sdf1 = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        sdf2 = new SimpleDateFormat("MM月dd日 HH:mm:ss", Locale.CHINA);
     }
 
     public void addNewStatus(List<Status> news) {
@@ -111,7 +104,7 @@ public class StatusAdapter extends BaseAdapter {
      */
     private void fillView(ViewHolder vh, Status status) {
         //主微博内容
-        vh.tvText.setText(status.text + "");
+        vh.tvText.setText(status.text);
         if (TextUtils.isEmpty(status.source)) {
             vh.tvFrom.setVisibility(View.GONE);
         } else {

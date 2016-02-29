@@ -12,7 +12,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#dfdfdf"></View>
+        android:background="#dfdfdf"/>
 
     <TextView
         android:id="@+id/textview_status_extratext"

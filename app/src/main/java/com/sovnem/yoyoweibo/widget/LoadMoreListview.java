@@ -15,7 +15,6 @@ import com.sovnem.yoyoweibo.R;
  * Created by 赵军辉 on 2016/2/22.
  */
 public class LoadMoreListview extends ListView {
-    private View more;
     private TextView tv;
     private ProgressBar pb;
 
@@ -35,7 +34,7 @@ public class LoadMoreListview extends ListView {
     }
 
     private void init() {
-        more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
+        View more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
         tv = (TextView) more.findViewById(R.id.textView_loadmore_text);
         pb = (ProgressBar) more.findViewById(R.id.progressBar_loadmore_pb);
         addFooterView(more);

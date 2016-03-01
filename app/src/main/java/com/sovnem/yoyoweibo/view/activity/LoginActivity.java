@@ -75,8 +75,6 @@ public class LoginActivity extends BaseActivity {
 
 
     public void showPublics(View view) {
-        Intent intent = new Intent(this, TimelineActivity.class);
-        startActivity(intent);
     }
 
 }

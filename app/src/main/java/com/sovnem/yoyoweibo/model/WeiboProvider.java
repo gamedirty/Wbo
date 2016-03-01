@@ -11,9 +11,6 @@ import com.sovnem.data.net.RequestListener;
  * Created by sovnem on 16/1/2.
  */
 public class WeiboProvider {
-    private static final String REQUEST_PUBLIC_TIMELINE = "https://api.weibo.com/2/statuses/public_timeline.json";
-
-
     /**
      * 获取关注的人的微博
      * <p/>

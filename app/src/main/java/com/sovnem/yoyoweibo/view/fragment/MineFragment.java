@@ -6,7 +6,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +24,12 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.sovnem.data.bean.User;
-import com.sovnem.data.biz.TokenManager;
 import com.sovnem.data.net.RequestListener;
 import com.sovnem.data.utils.L;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.model.UserProvider;
+
+import java.util.ArrayList;
 
 /**
  * 我的
@@ -36,6 +42,7 @@ public class MineFragment extends BaseFragment {
     private ImageView ivHead;
     private TextView tvNickname, tvLocation, tvFlowCount, tvFrdCount, tvStsCount, tvDesc;
     private TabLayout tabTop, tabNormal;
+    private ViewPager vpMine;
 
     @Override
     public void setHead(TextView title) {
@@ -44,10 +51,11 @@ public class MineFragment extends BaseFragment {
     }
 
     public static MineFragment getInstance() {
-
         return new MineFragment();
     }
 
+
+    ArrayList<Fragment> fragments;
 
     @Override
     public void initViews() {
@@ -62,10 +70,55 @@ public class MineFragment extends BaseFragment {
         tvStsCount = (TextView) getView().findViewById(R.id.textview_mine_statuscount);
         tvDesc = (TextView) getView().findViewById(R.id.textview_mine_description);
 
+        initTabLayout();
+
+    }
+
+    private void initTabLayout() {
+
         tabTop = (TabLayout) getView().findViewById(R.id.tabs_mine_top);
         tabNormal = (TabLayout) getView().findViewById(R.id.tabs_mine_normal);
 
+        vpMine = (ViewPager) getView().findViewById(R.id.viewpager_mine_vp);
+
+        fragments = new ArrayList<>();
+        MyTimelineFragment myTimelineFragment = MyTimelineFragment.getInstance();
+        MyPhotosFragment myPhotosFragment = MyPhotosFragment.getInstance();
+        MyFavoritesFragment myFavoritesFragment = MyFavoritesFragment.getInstance();
+        fragments.add(myTimelineFragment);
+        fragments.add(myPhotosFragment);
+        fragments.add(myFavoritesFragment);
+        L.e("到底是不是为空:" + (getFragmentManager() == null));
+        SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(getFragmentManager());
+        vpMine.setAdapter(pagerAdapter);
+        tabNormal.setupWithViewPager(vpMine);
+        tabNormal.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
+
+    private static final String[] tabTitles = new String[]{"微博", "相册", "收藏"};
+
+    class SimplePagerAdapter extends FragmentPagerAdapter {
+
+        public SimplePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+    }
+
 
     @Override
     public void initData() {
@@ -74,7 +127,7 @@ public class MineFragment extends BaseFragment {
             public void run() {
                 wrl.setRefreshing(true);
                 L.i("获取用户信息");
-                UserProvider.getUserInfomation(getActivity(), TokenManager.getUid(getActivity()), "", new RequestListener() {
+                UserProvider.getCurrentUserInfomation(getActivity(), new RequestListener() {
                     @Override
                     public void onSuccess(String s) {
                         wrl.setRefreshing(false);
@@ -118,6 +171,12 @@ public class MineFragment extends BaseFragment {
         tvNickname.setCompoundDrawables(null, null, drawable, null);
         tvDesc.setText(user.description);
         tvLocation.setText(user.location);
+        tvFlowCount.append(Html.fromHtml("<font color='#9EC668'>" + user.followers_count
+                + "</font>"));
+        tvFrdCount.append(Html.fromHtml("<font color='#9EC668'>" + user.friends_count
+                + "</font>"));
+        tvStsCount.append(Html.fromHtml("<font color='#9EC668'>" + user.statuses_count
+                + "</font>"));
 
     }
 

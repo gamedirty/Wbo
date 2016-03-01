@@ -47,8 +47,6 @@
 
         -->
 
-        <activity android:name=".view.activity.TimelineActivity">
-        </activity>
     </application>
 
 </manifest>

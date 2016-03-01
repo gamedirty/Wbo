@@ -9,19 +9,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * 我的里边的 微博fragment
- * Created by 赵军辉 on 2016/2/29.
+ * 我的相册
+ * Created by 赵军辉 on 2016/3/1.
  */
-public class MyTimelineFragment extends Fragment {
-    public static MyTimelineFragment getInstance() {
-        return new MyTimelineFragment();
+public class MyPhotosFragment extends Fragment {
+    public static MyPhotosFragment getInstance() {
+        return new MyPhotosFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView textView = new TextView(getActivity());
-        textView.setText("微博");
+        textView.setText("相册");
         return textView;
     }
 }

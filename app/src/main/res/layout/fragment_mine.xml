@@ -72,6 +72,7 @@
                         android:drawableRight="@mipmap/icon_sex_male"
                         android:padding="3dp"
                         android:text="bj_小螃蟹"
+                        android:textColor="@android:color/black"
                         android:textSize="20sp"
                         android:typeface="normal"/>
 
@@ -90,7 +91,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="粉丝 222"
+                            android:text="粉丝 "
                             android:textColor="#ffffff"
                             android:textSize="13sp"/>
 
@@ -107,7 +108,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="关注 11"
+                            android:text="关注 "
                             android:textColor="#ffffff"
                             android:textSize="13sp"/>
 
@@ -124,7 +125,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:text="微博 33"
+                            android:text="微博 "
                             android:textColor="#ffffff"
                             android:textSize="13sp"/>
 
@@ -136,7 +137,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/linearlayout_mine_counts"
                         android:layout_centerHorizontal="true"
-                        android:text="Anyone can be cool,but awesome takes practices"
                         android:textColor="#ffffff"
                         android:textSize="13sp"
                         android:typeface="normal"/>
@@ -156,6 +156,7 @@
                     />
 
                 <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_mine_vp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />

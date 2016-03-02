@@ -5,16 +5,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +27,7 @@ import com.sovnem.data.net.RequestListener;
 import com.sovnem.data.utils.L;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.model.UserProvider;
+import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
 
@@ -35,14 +35,13 @@ import java.util.ArrayList;
  * 我的
  * Created by 赵军辉 on 2015/12/31.
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TITLE = "我的";
     private SwipeRefreshLayout wrl;
     private RelativeLayout flCover;
     private ImageView ivHead;
     private TextView tvNickname, tvLocation, tvFlowCount, tvFrdCount, tvStsCount, tvDesc;
-    private TabLayout tabTop, tabNormal;
-    private ViewPager vpMine;
+    private LoadMoreListview lvContainer;
 
     @Override
     public void setHead(TextView title) {
@@ -60,6 +59,10 @@ public class MineFragment extends BaseFragment {
     @Override
     public void initViews() {
         wrl = (SwipeRefreshLayout) getView().findViewById(R.id.swiperefresh_mine_srl);
+        wrl.setOnRefreshListener(this);
+        lvContainer = (LoadMoreListview) getView().findViewById(R.id.listview_mine_container);
+        View headView = View.inflate(getActivity(), R.layout.layout_mine_headview, null);
+        lvContainer.addHeaderView(headView);
         flCover = (RelativeLayout) getView().findViewById(R.id.framelayout_mine_cover);
         ivHead = (ImageView) getView().findViewById(R.id.imageview_mine_head);
         tvNickname = (TextView) getView().findViewById(R.id.textview_mine_nickname);
@@ -69,18 +72,21 @@ public class MineFragment extends BaseFragment {
         tvFrdCount = (TextView) getView().findViewById(R.id.textview_mine_friendscount);
         tvStsCount = (TextView) getView().findViewById(R.id.textview_mine_statuscount);
         tvDesc = (TextView) getView().findViewById(R.id.textview_mine_description);
-
-        initTabLayout();
+//        initTabLayout();
+        initListview();
 
     }
 
+    private void initListview() {
+        ArrayList<String> data = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            data.add("我就是哈哈:" + i);
+//        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data);
+        lvContainer.setAdapter(adapter);
+    }
+
     private void initTabLayout() {
-
-        tabTop = (TabLayout) getView().findViewById(R.id.tabs_mine_top);
-        tabNormal = (TabLayout) getView().findViewById(R.id.tabs_mine_normal);
-
-        vpMine = (ViewPager) getView().findViewById(R.id.viewpager_mine_vp);
-
         fragments = new ArrayList<>();
         MyTimelineFragment myTimelineFragment = MyTimelineFragment.getInstance();
         MyPhotosFragment myPhotosFragment = MyPhotosFragment.getInstance();
@@ -90,12 +96,14 @@ public class MineFragment extends BaseFragment {
         fragments.add(myFavoritesFragment);
         L.e("到底是不是为空:" + (getFragmentManager() == null));
         SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(getFragmentManager());
-        vpMine.setAdapter(pagerAdapter);
-        tabNormal.setupWithViewPager(vpMine);
-        tabNormal.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     private static final String[] tabTitles = new String[]{"微博", "相册", "收藏"};
+
+    @Override
+    public void onRefresh() {
+        initData();
+    }
 
     class SimplePagerAdapter extends FragmentPagerAdapter {
 
@@ -122,6 +130,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initData() {
+
         wrl.post(new Runnable() {
             @Override
             public void run() {
@@ -148,6 +157,7 @@ public class MineFragment extends BaseFragment {
                 });
             }
         });
+        lvContainer.setStatusLoading();
     }
 
     /**

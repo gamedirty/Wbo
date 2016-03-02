@@ -9,5 +9,8 @@
     <string name="explore">发现</string>
     <string name="mine">我的</string>
     <string name="loading">加载中请稍等</string>
+    <string name="generic_server_down">请求超时</string>
+    <string name="no_internet">没有网络连接</string>
+    <string name="generic_error">请求失败</string>
 
 </resources>

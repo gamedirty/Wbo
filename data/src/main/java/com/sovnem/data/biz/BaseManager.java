@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sovnem.data.DataConstants;
-import com.sovnem.data.net.RequestListener;
 import com.sovnem.data.utils.L;
 import com.sovnem.data.utils.NetUtils;
 

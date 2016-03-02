@@ -13,7 +13,7 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.sovnem.data.DataConstants;
 import com.sovnem.data.biz.TokenManager;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.app.WoodApplication;
+import com.sovnem.yoyoweibo.app.YoApp;
 import com.sovnem.yoyoweibo.utils.T;
 
 /**
@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity {
 
                 TokenManager.writeAccessToken(LoginActivity.this, mAccessToken);
                 DataConstants.TOKEN = mAccessToken.getToken();
-                WoodApplication.hasLogin = true;
+                YoApp.hasLogin = true;
                 Toast.makeText(LoginActivity.this,
                         R.string.auth_success, Toast.LENGTH_SHORT).show();
             }

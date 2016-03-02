@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/framelayout_mine_cover"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        >
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageview_mine_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/ic_action_account_circle"/>
+
+        <TextView
+            android:id="@+id/textview_mine_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageview_mine_head"
+            android:layout_toRightOf="@+id/textview_mine_nickname"
+            android:padding="@dimen/padding_mine"
+            android:text="北京 海淀区"
+            android:textColor="#ffffff"
+            android:textSize="13sp"
+            android:typeface="normal"/>
+
+        <TextView
+            android:id="@id/textview_mine_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageview_mine_head"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/icon_sex_male"
+            android:padding="3dp"
+            android:text="bj_小螃蟹"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:typeface="normal"/>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_mine_counts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_mine_nickname"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/padding_mine">
+
+            <TextView
+                android:id="@+id/textview_mine_followerscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="粉丝 "
+                android:textColor="#ffffff"
+                android:textSize="13sp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:background="#0c4949"/>
+
+            <TextView
+                android:id="@+id/textview_mine_friendscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="关注 "
+                android:textColor="#ffffff"
+                android:textSize="13sp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:background="#0c4949"/>
+
+            <TextView
+                android:id="@+id/textview_mine_statuscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="微博 "
+                android:textColor="#ffffff"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textview_mine_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearlayout_mine_counts"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:textSize="13sp"
+            android:typeface="normal"/>
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

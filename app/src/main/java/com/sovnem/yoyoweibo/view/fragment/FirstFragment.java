@@ -205,7 +205,6 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), page, new RequestListener() {
             @Override
             public void onSuccess(String s) {
-                L.d("请求成功返回：" + s);
                 addOldStatuss(s);
                 isLoading = false;
                 page++;

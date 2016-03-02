@@ -25,6 +25,20 @@ public class WeiboProvider {
     }
 
     /**
+     * 获取关注的人的微博
+     * <p/>
+     * 先看数据库里是不是有需要的内容，如果数据库没有，从网络获取，返回并把获取到的内容存入数据库
+     *
+     * @param context
+     * @param requestListener
+     */
+    public static void getPublicWeibos(Context context, RequestListener requestListener) {
+        WeiboManager wm = new WeiboManager(context);
+        wm.getFriendTimeline(0, 0, requestListener);
+    }
+
+
+    /**
      * 获取最新的微博  即比指定的id小的微博
      *
      * @param newest
@@ -47,6 +61,10 @@ public class WeiboProvider {
     public static void getFriendsWeibosBefore(String max, Context context, int page, RequestListener requestListener) {
         WeiboManager wm = new WeiboManager(context);
         wm.getFriendTimelineBefore(Long.parseLong(max), page, requestListener);
+    }
+
+    public static void getUserWeibos(Context context, int page, RequestListener listener) {
+        WeiboManager wm = new WeiboManager(context);
     }
 
 }

@@ -53,6 +53,24 @@ public class WeiboManager extends BaseManager {
     }
 
     /**
+     * 全参数请求方式
+     *
+     * @param since
+     * @param max
+     * @param page
+     * @param listener
+     */
+    public void getPublicTimeline(long since, long max, int page, RequestListener listener) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("since_id", "" + since);
+        params.put("max_id", "" + max);
+        params.put("page", "" + page);
+        initTimelineGetParams(params);
+        String baseUrl = DataConstants.getFriends_timeline;
+        doGetRequest(params, baseUrl, listener);
+    }
+
+    /**
      * 默认
      *
      * @param since
@@ -60,6 +78,17 @@ public class WeiboManager extends BaseManager {
      * @param listener
      */
     public void getFriendTimeline(long since, long max, RequestListener listener) {
+        getFriendTimeline(since, max, 1, listener);
+    }
+
+    /**
+     * 默认
+     *
+     * @param since
+     * @param max
+     * @param listener
+     */
+    public void getPublicTimeline(long since, long max, RequestListener listener) {
         getFriendTimeline(since, max, 1, listener);
     }
 
@@ -72,5 +101,8 @@ public class WeiboManager extends BaseManager {
         getFriendTimeline(since, 0, 1, listener);
     }
 
+
+    public void getTimelineOfUser() {
+    }
 
 }

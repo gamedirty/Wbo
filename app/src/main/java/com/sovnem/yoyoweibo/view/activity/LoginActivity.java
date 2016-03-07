@@ -3,6 +3,7 @@ package com.sovnem.yoyoweibo.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sina.weibo.sdk.auth.AuthInfo;
@@ -10,11 +11,10 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
-import com.sovnem.data.DataConstants;
-import com.sovnem.data.biz.TokenManager;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.app.YoApp;
+import com.sovnem.yoyoweibo.app.Constants;
 import com.sovnem.yoyoweibo.utils.T;
+import com.sovnem.yoyoweibo.utils.TokenManager;
 
 /**
  * 登陆activity  包括登陆按钮和 随便看看按钮
@@ -22,6 +22,7 @@ import com.sovnem.yoyoweibo.utils.T;
 public class LoginActivity extends BaseActivity {
 
     private SsoHandler ssoHandler;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(View view) {
-        AuthInfo ai = new AuthInfo(this, DataConstants.APP_KEY, DataConstants.REDIRECT_URL, DataConstants.SCOPE);
+        AuthInfo ai = new AuthInfo(this, Constants.APP_KEY, Constants.REDIRECT_URL, Constants.SCOPE);
         ssoHandler = new SsoHandler(this, ai);
         ssoHandler.authorize(new AuthListener());
     }
@@ -46,10 +47,11 @@ public class LoginActivity extends BaseActivity {
             if (mAccessToken.isSessionValid()) {
 
                 TokenManager.writeAccessToken(LoginActivity.this, mAccessToken);
-                DataConstants.TOKEN = mAccessToken.getToken();
-                YoApp.hasLogin = true;
+                Constants.TOKEN = mAccessToken.getToken();
                 Toast.makeText(LoginActivity.this,
                         R.string.auth_success, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         }
 
@@ -71,7 +73,6 @@ public class LoginActivity extends BaseActivity {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
     }
-
 
 
     public void showPublics(View view) {

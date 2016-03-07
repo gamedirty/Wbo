@@ -7,8 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.sovnem.data.biz.TokenManager;
-import com.sovnem.data.utils.L;
+import com.sovnem.yoyoweibo.utils.L;
+import com.sovnem.yoyoweibo.utils.TokenManager;
 import com.sovnem.yoyoweibo.view.activity.BaseActivity;
 import com.sovnem.yoyoweibo.view.activity.LoginActivity;
 import com.sovnem.yoyoweibo.view.activity.MainActivity;
@@ -61,7 +61,7 @@ public class SplashActivity extends BaseActivity {
 
     private void toMain() {
         Intent intent = new Intent();
-        boolean hasLogin = TokenManager.isTokenExists(this);
+        boolean hasLogin = TokenManager.hasLogined(this);
         if (hasLogin) {
             L.i("已经登陆");
             intent.setClass(this, MainActivity.class);

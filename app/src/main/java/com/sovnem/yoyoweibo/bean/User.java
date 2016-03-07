@@ -1,8 +1,9 @@
-package com.sovnem.data.bean;
+package com.sovnem.yoyoweibo.bean;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * 微博用户
  * Created by sovnem on 16/2/27.
  */
 public class User {

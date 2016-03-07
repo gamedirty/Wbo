@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.sovnem.data.bean.Status;
+import com.sovnem.yoyoweibo.bean.Status;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
 import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;

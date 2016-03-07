@@ -1,9 +1,9 @@
-package com.sovnem.data.bean;
+package com.sovnem.yoyoweibo.bean;
 
 import java.util.List;
 
 /**
- *
+ * 微博列表
  * Created by sovnem on 16/2/27.
  */
 public class StatusList {

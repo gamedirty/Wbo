@@ -16,3 +16,6 @@
 #   public *;
 #}
 -keep class com.bumptech.glide.integration.volley.VolleyGlideModule
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}

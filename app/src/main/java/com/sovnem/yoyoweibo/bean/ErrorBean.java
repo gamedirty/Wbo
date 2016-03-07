@@ -1,4 +1,4 @@
-package com.sovnem.data.bean;
+package com.sovnem.yoyoweibo.bean;
 
 /**
  * 返回的错误实体

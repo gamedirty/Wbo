@@ -1,4 +1,4 @@
-package com.sovnem.data.bean;
+package com.sovnem.yoyoweibo.bean;
 
 import java.util.List;
 

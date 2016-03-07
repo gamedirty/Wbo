@@ -22,14 +22,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
-import com.sovnem.data.bean.User;
-import com.sovnem.data.net.RequestListener;
-import com.sovnem.data.utils.L;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.model.UserProvider;
+import com.sovnem.yoyoweibo.app.Constants;
+import com.sovnem.yoyoweibo.bean.User;
+import com.sovnem.yoyoweibo.net.HttpManager;
+import com.sovnem.yoyoweibo.net.RequestListener;
+import com.sovnem.yoyoweibo.utils.L;
+import com.sovnem.yoyoweibo.utils.TokenManager;
 import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 我的
@@ -136,17 +139,22 @@ public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void run() {
                 wrl.setRefreshing(true);
                 L.i("获取用户信息");
-                UserProvider.getCurrentUserInfomation(getActivity(), new RequestListener() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("access_token", "" + TokenManager.getToken(getActivity()));
+                params.put("uid", "" + TokenManager.getUid(getActivity()));
+
+
+                HttpManager.doGetRequest(getActivity(), params, Constants.getUserinfo, new RequestListener() {
                     @Override
-                    public void onSuccess(String s) {
+                    public void onRequestSuccess(String result) {
                         wrl.setRefreshing(false);
-                        User user = new Gson().fromJson(s, User.class);
+                        User user = new Gson().fromJson(result, User.class);
                         L.i("获取到的用户信息:" + user.toString());
                         fillData(user);
                     }
 
                     @Override
-                    public void onFailed(String failMsg) {
+                    public void onRequestError(String errMsg) {
                         wrl.setRefreshing(false);
                     }
 

@@ -12,17 +12,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.sovnem.data.bean.Status;
-import com.sovnem.data.bean.StatusList;
-import com.sovnem.data.net.RequestListener;
-import com.sovnem.data.utils.L;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.model.WeiboProvider;
+import com.sovnem.yoyoweibo.app.AppConfig;
+import com.sovnem.yoyoweibo.app.Constants;
+import com.sovnem.yoyoweibo.bean.Status;
+import com.sovnem.yoyoweibo.bean.StatusList;
+import com.sovnem.yoyoweibo.net.HttpManager;
+import com.sovnem.yoyoweibo.net.RequestListener;
+import com.sovnem.yoyoweibo.utils.L;
 import com.sovnem.yoyoweibo.utils.T;
+import com.sovnem.yoyoweibo.utils.TokenManager;
 import com.sovnem.yoyoweibo.view.adapter.StatusAdapter;
 import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 首页fragment
@@ -83,26 +87,17 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
             @Override
             public void run() {
                 srl.setRefreshing(true);
-                isLoading = true;
-                WeiboProvider.getFriendsWeibos(getActivity(), new RequestListener() {
-                    @Override
-                    public void onSuccess(String ts) {
-                        showNewData(ts);
-                        isLoading = false;
-                    }
-
-                    @Override
-                    public void onFailed(String failMsg) {
-                        isLoading = false;
-                    }
-
-                    @Override
-                    public void onNetError() {
-                        isLoading = false;
-                    }
-                });
+                getFirstpageWeibos();
             }
         });
+    }
+
+    private void getFirstpageWeibos() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("access_token", "" + TokenManager.getToken(getActivity()));
+        params.put("count", "" + AppConfig.PAGE_COUNT);
+        isLoading = true;
+        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_DEFALTLOAD));
     }
 
     private void showNewData(String s) {
@@ -131,24 +126,11 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         isLoading = true;
-        WeiboProvider.getFriendsWeibosAfter(newest, getActivity(), new RequestListener() {
-            @Override
-            public void onSuccess(String s) {
-                isLoading = false;
-                addNewestStatus(s);
-            }
-
-            @Override
-            public void onFailed(String failMsg) {
-
-                L.i(failMsg);
-            }
-
-            @Override
-            public void onNetError() {
-                isLoading = false;
-            }
-        });
+        HashMap<String, String> params = new HashMap<>();
+        params.put("access_token", "" + TokenManager.getToken(getActivity()));
+        params.put("count", "" + AppConfig.PAGE_COUNT);
+        params.put("since_id", "" + newest);
+        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_REFRESH));
     }
 
     /**
@@ -202,29 +184,15 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     private void loadMore() {
         isLoading = true;
         mlv.setStatusLoading();
-        WeiboProvider.getFriendsWeibosBefore(oldest, getActivity(), page, new RequestListener() {
-            @Override
-            public void onSuccess(String s) {
-                addOldStatuss(s);
-                isLoading = false;
-                page++;
-            }
-
-            @Override
-            public void onFailed(String failMsg) {
-                mlv.setStatusLoading();
-                isLoading = false;
-            }
-
-            @Override
-            public void onNetError() {
-                isLoading = false;
-            }
-        });
+        HashMap<String, String> params = new HashMap<>();
+        params.put("access_token", "" + TokenManager.getToken(getActivity()));
+        params.put("count", "" + AppConfig.PAGE_COUNT);
+        params.put("max_id", "" + oldest);
+        params.put("page", "" + page);
+        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_LOADMORE));
     }
 
     private void addOldStatuss(String s) {
-//        L.i("加载更多返回值:" + s);
         StatusList list = new Gson().fromJson(s, StatusList.class);
         if (list.statuses == null) {
             mlv.setStatusLoadMoreError();
@@ -238,6 +206,53 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         if (count == 0) {
             mlv.setStatusNomore();
             noMore = true;
+        }
+    }
+
+    class MyRequestListener implements RequestListener {
+        static final int TYPE_DEFALTLOAD = 1;
+        static final int TYPE_REFRESH = 2;
+        static final int TYPE_LOADMORE = 3;
+        int type;//
+
+        MyRequestListener(int type) {
+            this.type = type;
+        }
+
+        @Override
+        public void onRequestSuccess(String result) {
+            isLoading = false;
+            switch (type) {
+                case TYPE_DEFALTLOAD:
+                    showNewData(result);
+                    break;
+                case TYPE_LOADMORE:
+                    addOldStatuss(result);
+                    page++;
+                    break;
+                case TYPE_REFRESH:
+                    addNewestStatus(result);
+                    break;
+            }
+        }
+
+        @Override
+        public void onRequestError(String errMsg) {
+            isLoading = false;
+            switch (type) {
+                case TYPE_DEFALTLOAD:
+                    break;
+                case TYPE_LOADMORE:
+                    mlv.setStatusLoading();
+                    break;
+                case TYPE_REFRESH:
+                    break;
+            }
+        }
+
+        @Override
+        public void onNetError() {
+            isLoading = false;
         }
     }
 }

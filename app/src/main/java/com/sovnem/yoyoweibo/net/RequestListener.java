@@ -1,25 +1,12 @@
 package com.sovnem.yoyoweibo.net;
 
 /**
- * Created by 赵军辉 on 2016/2/23.
+ * Created by sovnem on 16/3/6.
  */
 public interface RequestListener {
-    /**
-     * 请求成功
-     *
-     * @param s 结果
-     */
-    public void onSuccess(String s);
+    public void onRequestSuccess(String result);
 
-    /**
-     * 请求失败 服务器错误
-     *
-     * @param failMsg
-     */
-    public void onFailed(String failMsg);
+    public void onRequestError(String errMsg);
 
-    /**
-     * 无网络连接
-     */
     public void onNetError();
 }

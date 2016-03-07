@@ -34,5 +34,5 @@ dependencies {
     compile 'com.github.bumptech.glide:volley-integration:1.4.0@aar'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'org.xutils:xutils:3.3.20'
 }

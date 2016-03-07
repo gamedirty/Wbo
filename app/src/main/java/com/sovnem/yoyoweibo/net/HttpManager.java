@@ -1,6 +1,7 @@
 package com.sovnem.yoyoweibo.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 /**
  * 封装的volley请求工具类
+ * 有缓存的
  * Created by sovnem on 16/3/6.
  */
 public class HttpManager {
@@ -29,22 +31,33 @@ public class HttpManager {
     /**
      * 做get请求
      *
-     * @param context  上下文实例
-     * @param params   参数
-     * @param url      请求地址
-     * @param listener 监听器
-     * @param limit    是不是设置超时
+     * @param context     上下文实例
+     * @param params      参数
+     * @param url         请求地址
+     * @param listener    监听器
+     * @param limit       是不是设置超时
+     * @param shouldCache 需不需要缓存
      */
-    public static void doGetRequest(Context context, HashMap<String, String> params, String url, final RequestListener listener, boolean limit) {
+    public static void doGetRequest(Context context, HashMap<String, String> params, String url, final RequestListener listener, boolean limit, final boolean shouldCache) {
+
+        url = makeGetUrlWithParams(url, params);
+
+        if (shouldCache)
+            if (!TextUtils.isEmpty(HttpCache.get(url))) {
+                listener.onRequestSuccess(HttpCache.get(url));
+                return;
+            }
         if (!NetUtils.isConnected(context)) {
             listener.onNetError();
             return;
         }
-        url = makeGetUrlWithParams(url, params);
+        final String finalUrl = url;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 listener.onRequestSuccess(response);
+                if (shouldCache)
+                    HttpCache.put(finalUrl, response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -67,7 +80,7 @@ public class HttpManager {
      * @param listener 监听器
      */
     public static void doGetRequest(Context context, HashMap<String, String> params, String url, final RequestListener listener) {
-        doGetRequest(context, params, url, listener, true);
+        doGetRequest(context, params, url, listener, true, false);
     }
 
     /**
@@ -126,4 +139,6 @@ public class HttpManager {
         }
         SingletonQueue.getInstance(context).addToQueue(request);
     }
+
+
 }

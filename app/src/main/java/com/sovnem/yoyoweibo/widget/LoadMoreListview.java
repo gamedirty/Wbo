@@ -42,14 +42,16 @@ public class LoadMoreListview extends ListView {
 
     public void setStatusLoadMoreError() {
         tv.setText("加载失败，点击重试");
+        pb.setVisibility(View.INVISIBLE);
     }
 
     public void setStatusLoading() {
+        pb.setVisibility(View.VISIBLE);
         tv.setText("加载中，请稍候");
     }
 
     public void setStatusNomore() {
-        pb.setVisibility(View.GONE);
+        pb.setVisibility(View.INVISIBLE);
         tv.setText("没有更多的微博");
     }
 }

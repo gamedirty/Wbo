@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.sovnem.yoyoweibo.bean.Status;
 import com.sovnem.yoyoweibo.R;
+import com.sovnem.yoyoweibo.bean.Status;
 import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
 import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;
 
@@ -119,7 +119,7 @@ public class StatusAdapter extends BaseAdapter {
                 .attitudes_count));
         vh.tvComments.setText((status.comments_count == 0) ? "评论" : (status
                 .comments_count + ""));
-        Glide.with(context).load(status.user.profile_image_url).into(vh
+        Glide.with(context).load(status.user.profile_image_url).dontAnimate().into(vh
                 .ivHead);
         if (status.pic_urls != null && status.pic_urls.size() > 0) {//主微博带的图片
             vh.imgsLayout.setVisibility(View.VISIBLE);
@@ -160,7 +160,8 @@ public class StatusAdapter extends BaseAdapter {
             iv.setImageResource(-1);
 
             imgsLayout.addView(iv);
-            url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "large");
+            if (!isGif)
+                url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "large");
 
             if (isGif) {
                 Glide.with(context).load(url).asBitmap().dontAnimate()

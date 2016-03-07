@@ -37,6 +37,15 @@ public class LoadMoreListview extends ListView {
         View more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
         tv = (TextView) more.findViewById(R.id.textView_loadmore_text);
         pb = (ProgressBar) more.findViewById(R.id.progressBar_loadmore_pb);
+        more.setClickable(true);
+        more.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loadMoreWork != null) {
+                    loadMoreWork.work();
+                }
+            }
+        });
         addFooterView(more);
     }
 
@@ -53,5 +62,15 @@ public class LoadMoreListview extends ListView {
     public void setStatusNomore() {
         pb.setVisibility(View.INVISIBLE);
         tv.setText("没有更多的微博");
+    }
+
+    private LoadMoreWork loadMoreWork;
+
+    public void setLoadMoreWork(LoadMoreWork loadMoreWork) {
+        this.loadMoreWork = loadMoreWork;
+    }
+
+    public interface LoadMoreWork {
+        public void work();
     }
 }

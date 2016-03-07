@@ -72,6 +72,12 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         mlv = (LoadMoreListview) getView().findViewById(R.id.listview_first_list);
         srl = (SwipeRefreshLayout) getView().findViewById(R.id.srfl_firstpage_refresh);
         srl.setOnRefreshListener(this);
+        mlv.setLoadMoreWork(new LoadMoreListview.LoadMoreWork() {
+            @Override
+            public void work() {
+                loadMore();
+            }
+        });
     }
 
     @Override
@@ -127,7 +133,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     @Override
     public void onRefresh() {
-        if (adapter==null) {
+        if (adapter == null) {
             getFirstpageWeibos();
         }
         isLoading = true;
@@ -264,15 +270,17 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         public void onNetError() {
 
             isLoading = false;
-            T.show(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT);
+
             switch (type) {
                 case TYPE_DEFALTLOAD:
                     srl.setRefreshing(false);
+                    T.show(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT);
                     break;
                 case TYPE_LOADMORE:
                     mlv.setStatusLoadMoreError();
                     break;
                 case TYPE_REFRESH:
+                    T.show(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT);
                     srl.setRefreshing(false);
                     break;
             }

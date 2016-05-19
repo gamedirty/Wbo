@@ -1,2 +1,2 @@
-include ':app', ':test', ':'
+include ':app', ':orm_test', ':testmodule', ':rxjavatest', ':android_lib', ':daomodule', ':retrofittest', ':java_test_project', ':yowork', ':'
 

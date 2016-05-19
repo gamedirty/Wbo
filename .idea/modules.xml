@@ -5,8 +5,16 @@
       <module fileurl="file://$PROJECT_DIR$/Wodeweibo.iml" filepath="$PROJECT_DIR$/Wodeweibo.iml" />
       <module fileurl="file://$PROJECT_DIR$/YoYoWeibo.iml" filepath="$PROJECT_DIR$/YoYoWeibo.iml" />
       <module fileurl="file://$PROJECT_DIR$/YoYoWeibotempt.iml" filepath="$PROJECT_DIR$/YoYoWeibotempt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_lib/android_lib.iml" filepath="$PROJECT_DIR$/android_lib/android_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/daomodule/daomodule.iml" filepath="$PROJECT_DIR$/daomodule/daomodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java_test_project/java_test_project.iml" filepath="$PROJECT_DIR$/java_test_project/java_test_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orm_test/orm_test.iml" filepath="$PROJECT_DIR$/orm_test/orm_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retrofittest/retrofittest.iml" filepath="$PROJECT_DIR$/retrofittest/retrofittest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxjavatest/rxjavatest.iml" filepath="$PROJECT_DIR$/rxjavatest/rxjavatest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orm_test/test.iml" filepath="$PROJECT_DIR$/orm_test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testmodule/testmodule.iml" filepath="$PROJECT_DIR$/testmodule/testmodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yowork/yowork.iml" filepath="$PROJECT_DIR$/yowork/yowork.iml" />
     </modules>
   </component>
 </project>

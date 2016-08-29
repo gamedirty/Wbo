@@ -49,7 +49,6 @@ public class LoginActivity extends BaseActivity {
             if (mAccessToken.isSessionValid()) {
 
                 TokenManager.writeAccessToken(LoginActivity.this, mAccessToken);
-                Constants.TOKEN = mAccessToken.getToken();
                 Toast.makeText(LoginActivity.this,
                         R.string.auth_success, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

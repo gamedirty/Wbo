@@ -37,19 +37,40 @@ public class LoadMoreListview extends ListView {
         View more = View.inflate(getContext(), R.layout.layout_loadmore_view, null);
         tv = (TextView) more.findViewById(R.id.textView_loadmore_text);
         pb = (ProgressBar) more.findViewById(R.id.progressBar_loadmore_pb);
+        more.setClickable(true);
+        more.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loadMoreWork != null) {
+                    loadMoreWork.work();
+                }
+            }
+        });
         addFooterView(more);
     }
 
     public void setStatusLoadMoreError() {
         tv.setText("加载失败，点击重试");
+        pb.setVisibility(View.INVISIBLE);
     }
 
     public void setStatusLoading() {
+        pb.setVisibility(View.VISIBLE);
         tv.setText("加载中，请稍候");
     }
 
     public void setStatusNomore() {
-        pb.setVisibility(View.GONE);
+        pb.setVisibility(View.INVISIBLE);
         tv.setText("没有更多的微博");
+    }
+
+    private LoadMoreWork loadMoreWork;
+
+    public void setLoadMoreWork(LoadMoreWork loadMoreWork) {
+        this.loadMoreWork = loadMoreWork;
+    }
+
+    public interface LoadMoreWork {
+        public void work();
     }
 }

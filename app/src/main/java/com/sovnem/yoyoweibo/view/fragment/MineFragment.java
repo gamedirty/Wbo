@@ -98,7 +98,6 @@ public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         fragments.add(myTimelineFragment);
         fragments.add(myPhotosFragment);
         fragments.add(myFavoritesFragment);
-        L.e("到底是不是为空:" + (getFragmentManager() == null));
         SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(getFragmentManager());
     }
 
@@ -150,7 +149,6 @@ public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     public void onRequestSuccess(String result) {
                         wrl.setRefreshing(false);
                         User user = new Gson().fromJson(result, User.class);
-                        L.i("获取到的用户信息:" + user.toString());
                         fillData(user);
                     }
 

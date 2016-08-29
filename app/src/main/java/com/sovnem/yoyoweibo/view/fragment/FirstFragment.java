@@ -3,6 +3,7 @@ package com.sovnem.yoyoweibo.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,12 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         mlv = (LoadMoreListview) getView().findViewById(R.id.listview_first_list);
         srl = (SwipeRefreshLayout) getView().findViewById(R.id.srfl_firstpage_refresh);
         srl.setOnRefreshListener(this);
+        mlv.setLoadMoreWork(new LoadMoreListview.LoadMoreWork() {
+            @Override
+            public void work() {
+                loadMore();
+            }
+        });
     }
 
     @Override
@@ -98,6 +105,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         params.put("access_token", "" + TokenManager.getToken(getActivity()));
         params.put("count", "" + AppConfig.PAGE_COUNT);
         isLoading = true;
+        L.i("第一次请求");
         HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_DEFALTLOAD));
     }
 
@@ -126,11 +134,16 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
      */
     @Override
     public void onRefresh() {
+        if (adapter == null) {
+            getFirstpageWeibos();
+        }
         isLoading = true;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("access_token", "" + TokenManager.getToken(getActivity()));
         params.put("count", "" + AppConfig.PAGE_COUNT);
-        params.put("since_id", "" + newest);
+        if (!TextUtils.isEmpty(newest))
+            params.put("since_id", "" + newest);
         HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_REFRESH));
     }
 
@@ -240,20 +253,38 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         @Override
         public void onRequestError(String errMsg) {
             isLoading = false;
+            T.show(getActivity(), R.string.generic_error, Toast.LENGTH_SHORT);
             switch (type) {
                 case TYPE_DEFALTLOAD:
+                    srl.setRefreshing(false);
                     break;
                 case TYPE_LOADMORE:
                     mlv.setStatusLoading();
                     break;
                 case TYPE_REFRESH:
+                    srl.setRefreshing(false);
                     break;
             }
         }
 
         @Override
         public void onNetError() {
+
             isLoading = false;
+
+            switch (type) {
+                case TYPE_DEFALTLOAD:
+                    srl.setRefreshing(false);
+                    T.show(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT);
+                    break;
+                case TYPE_LOADMORE:
+                    mlv.setStatusLoadMoreError();
+                    break;
+                case TYPE_REFRESH:
+                    T.show(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT);
+                    srl.setRefreshing(false);
+                    break;
+            }
         }
     }
 }

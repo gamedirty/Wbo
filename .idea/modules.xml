@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/YoYoWeibo.iml" filepath="$PROJECT_DIR$/YoYoWeibo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Wbo.iml" filepath="$PROJECT_DIR$/Wbo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_support/lib_support.iml" filepath="$PROJECT_DIR$/lib_support/lib_support.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_widgets/lib_widgets.iml" filepath="$PROJECT_DIR$/lib_widgets/lib_widgets.iml" />

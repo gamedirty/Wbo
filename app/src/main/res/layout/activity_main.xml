@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.sovnem.yoyoweibo.view.activity.MainActivity">
 
-    <com.sovnem.yoyoweibo.widget.CannotScrollViewpager
+    <gamedirty.com.lib_widgets.widget.CannotScrollViewpager
         android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="0dp"

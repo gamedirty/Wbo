@@ -15,8 +15,6 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.gamedirty.bean.Status;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
-import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +25,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import gamedirty.com.lib_support.utils.L;
+import gamedirty.com.lib_widgets.widget.ClickAbleImageView;
+import gamedirty.com.lib_widgets.widget.MultiImageViewGroup;
 
 
 /**

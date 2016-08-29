@@ -10,18 +10,18 @@
         />
 
 
-    <com.sovnem.yoyoweibo.widget.YOYORefreshLayout
+    <gamedirty.com.lib_widgets.widget.YOYORefreshLayout
         android:id="@+id/srfl_firstpage_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sovnem.yoyoweibo.widget.LoadMoreListview
+        <gamedirty.com.lib_widgets.widget.LoadMoreListview
             android:id="@+id/listview_first_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
             android:fastScrollEnabled="true"/>
-    </com.sovnem.yoyoweibo.widget.YOYORefreshLayout>
+    </gamedirty.com.lib_widgets.widget.YOYORefreshLayout>
 
 
 </LinearLayout>

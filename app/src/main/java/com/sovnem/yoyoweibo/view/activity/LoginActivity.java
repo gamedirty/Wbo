@@ -12,7 +12,7 @@ import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sovnem.yoyoweibo.R;
-import com.gamedirty.utils.Constants;
+import com.gamedirty.global.Constants;
 import com.sovnem.yoyoweibo.app.TokenManager;
 import com.sovnem.yoyoweibo.base.BaseActivity;
 

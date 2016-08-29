@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:src="@mipmap/ic_action_account_circle"/>
+            android:src="@drawable/ic_action_account_circle"/>
 
         <TextView
             android:id="@+id/textview_mine_location"
@@ -39,7 +39,7 @@
             android:layout_below="@id/imageview_mine_head"
             android:layout_centerHorizontal="true"
             android:drawablePadding="5dp"
-            android:drawableRight="@mipmap/icon_sex_male"
+            android:drawableRight="@drawable/icon_sex_male"
             android:padding="3dp"
             android:text="bj_小螃蟹"
             android:textColor="@android:color/black"

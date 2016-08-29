@@ -22,18 +22,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.gamedirty.bean.User;
+import com.gamedirty.global.Constants;
 import com.google.gson.Gson;
 import com.sovnem.yoyoweibo.R;
-import com.gamedirty.utils.Constants;
 import com.sovnem.yoyoweibo.app.TokenManager;
 import com.sovnem.yoyoweibo.net.HttpManager;
 import com.sovnem.yoyoweibo.net.RequestListener;
-import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import gamedirty.com.lib_support.utils.L;
+import gamedirty.com.lib_widgets.widget.LoadMoreListview;
 
 /**
  * 我的
@@ -183,7 +183,7 @@ public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         Glide.with(getActivity()).load(user.avatar_large).dontAnimate().into(ivHead);
 
         boolean isMale = "m".equals(user.gender);
-        Drawable drawable = getResources().getDrawable(isMale ? R.mipmap.icon_sex_male : R.mipmap.icon_sex_famale);
+        Drawable drawable = getResources().getDrawable(isMale ? R.drawable.icon_sex_male : R.drawable.icon_sex_famale);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvNickname.setCompoundDrawables(null, null, drawable, null);
         tvDesc.setText(user.description);

@@ -32,13 +32,13 @@
         android:padding="10dp"
         android:visibility="gone">
 
-        <com.sovnem.yoyoweibo.widget.MultiImageViewGroup
+        <gamedirty.com.lib_widgets.widget.MultiImageViewGroup
             android:id="@+id/imageviews_status_extraimgs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
-        </com.sovnem.yoyoweibo.widget.MultiImageViewGroup>
+        </gamedirty.com.lib_widgets.widget.MultiImageViewGroup>
     </FrameLayout>
 
 </LinearLayout>

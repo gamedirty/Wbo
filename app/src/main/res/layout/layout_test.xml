@@ -4,9 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.sovnem.yoyoweibo.widget.MultiImageViewGroup
+    <gamedirty.com.lib_widgets.widget.MultiImageViewGroup
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.sovnem.yoyoweibo.widget.MultiImageViewGroup>
+    </gamedirty.com.lib_widgets.widget.MultiImageViewGroup>
 </LinearLayout>

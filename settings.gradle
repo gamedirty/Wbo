@@ -1,3 +1,3 @@
-include ':app', ':modle', ':lib_support', ':'
+include ':app', ':modle', ':lib_support', ':lib_widgets', ':'
 
 include ':weiboSDK'

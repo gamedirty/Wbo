@@ -29,7 +29,7 @@
                 android:id="@+id/imageview_status_head"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@mipmap/ic_action_account_circle"
+                android:background="@drawable/ic_action_account_circle"
                 />
 
             <LinearLayout
@@ -96,14 +96,14 @@
             android:visibility="gone"
             >
 
-            <com.sovnem.yoyoweibo.widget.MultiImageViewGroup
+            <gamedirty.com.lib_widgets.widget.MultiImageViewGroup
                 android:id="@+id/imageviews_status_imgs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
 
 
-            </com.sovnem.yoyoweibo.widget.MultiImageViewGroup>
+            </gamedirty.com.lib_widgets.widget.MultiImageViewGroup>
         </FrameLayout>
 
 
@@ -139,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_social_share"/>
+                        android:src="@drawable/ic_social_share"/>
 
                     <TextView
                         android:id="@+id/textview_status_repostnum"
@@ -178,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_communication_comment"/>
+                        android:src="@drawable/ic_communication_comment"/>
 
                     <TextView
                         android:id="@+id/textview_status_commentsnum"
@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@mipmap/ic_action_thumb_up_"/>
+                        android:src="@drawable/ic_action_thumb_up_"/>
 
                     <TextView
                         android:id="@+id/textview_status_likenum"

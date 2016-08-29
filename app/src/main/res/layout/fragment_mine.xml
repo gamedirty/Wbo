@@ -10,15 +10,15 @@
         layout="@layout/layout_global_head"
         />
 
-    <com.sovnem.yoyoweibo.widget.YOYORefreshLayout
+    <gamedirty.com.lib_widgets.widget.YOYORefreshLayout
         android:id="@+id/swiperefresh_mine_srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sovnem.yoyoweibo.widget.LoadMoreListview
+        <gamedirty.com.lib_widgets.widget.LoadMoreListview
             android:id="@+id/listview_mine_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.sovnem.yoyoweibo.widget.LoadMoreListview>
+            android:layout_height="match_parent"></gamedirty.com.lib_widgets.widget.LoadMoreListview>
 
-    </com.sovnem.yoyoweibo.widget.YOYORefreshLayout>
+    </gamedirty.com.lib_widgets.widget.YOYORefreshLayout>
 </LinearLayout>

@@ -7,11 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.sovnem.yoyoweibo.utils.L;
-import com.sovnem.yoyoweibo.utils.TokenManager;
-import com.sovnem.yoyoweibo.view.activity.BaseActivity;
+import com.sovnem.yoyoweibo.app.YoApp;
+import com.sovnem.yoyoweibo.base.BaseActivity;
 import com.sovnem.yoyoweibo.view.activity.LoginActivity;
 import com.sovnem.yoyoweibo.view.activity.MainActivity;
+
+import gamedirty.com.lib_support.utils.L;
 
 public class SplashActivity extends BaseActivity {
     private TextView tvT;
@@ -61,7 +62,7 @@ public class SplashActivity extends BaseActivity {
 
     private void toMain() {
         Intent intent = new Intent();
-        boolean hasLogin = TokenManager.hasLogined(this);
+        boolean hasLogin = YoApp.getInstance().hasLogin();
         if (hasLogin) {
             L.i("已经登陆");
             intent.setClass(this, MainActivity.class);

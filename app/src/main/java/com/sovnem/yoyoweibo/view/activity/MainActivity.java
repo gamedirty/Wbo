@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.sovnem.yoyoweibo.R;
+import com.sovnem.yoyoweibo.base.BaseActivity;
 import com.sovnem.yoyoweibo.view.fragment.FindFragment;
 import com.sovnem.yoyoweibo.view.fragment.FirstFragment;
 import com.sovnem.yoyoweibo.view.fragment.MessageFragment;

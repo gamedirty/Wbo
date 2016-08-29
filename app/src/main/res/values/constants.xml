@@ -2,5 +2,5 @@
 <!--储存资源定义时候用到的一些常量-->
 <resources>
     <!--activity切换动画时长-->
-    <integer name="activity_trans_duration">400</integer>
+    <integer name="activity_trans_duration">300</integer>
 </resources>

@@ -21,18 +21,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.gamedirty.bean.User;
 import com.google.gson.Gson;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.app.Constants;
-import com.sovnem.yoyoweibo.bean.User;
+import com.gamedirty.utils.Constants;
+import com.sovnem.yoyoweibo.app.TokenManager;
 import com.sovnem.yoyoweibo.net.HttpManager;
 import com.sovnem.yoyoweibo.net.RequestListener;
-import com.sovnem.yoyoweibo.utils.L;
-import com.sovnem.yoyoweibo.utils.TokenManager;
 import com.sovnem.yoyoweibo.widget.LoadMoreListview;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import gamedirty.com.lib_support.utils.L;
 
 /**
  * 我的

@@ -12,9 +12,11 @@ import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sovnem.yoyoweibo.R;
-import com.sovnem.yoyoweibo.app.Constants;
-import com.sovnem.yoyoweibo.utils.T;
-import com.sovnem.yoyoweibo.utils.TokenManager;
+import com.gamedirty.utils.Constants;
+import com.sovnem.yoyoweibo.app.TokenManager;
+import com.sovnem.yoyoweibo.base.BaseActivity;
+
+import gamedirty.com.lib_support.utils.T;
 
 /**
  * 登陆activity  包括登陆按钮和 随便看看按钮

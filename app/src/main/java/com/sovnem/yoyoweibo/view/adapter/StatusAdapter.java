@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.sovnem.yoyoweibo.bean.Status;
+import com.gamedirty.bean.Status;
 import com.sovnem.yoyoweibo.R;
 import com.sovnem.yoyoweibo.widget.ClickAbleImageView;
 import com.sovnem.yoyoweibo.widget.MultiImageViewGroup;
@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+
+import gamedirty.com.lib_support.utils.L;
 
 
 /**
@@ -128,7 +130,11 @@ public class StatusAdapter extends BaseAdapter {
         Status extraStatus = status.retweeted_status;
         if (extraStatus != null) {//如果是引用的别人的微博
             vh.extra.setVisibility(View.VISIBLE);
-            vh.tvExtraText.setText("@" + extraStatus.user.name + "：" + extraStatus.text);
+            if (extraStatus.user != null) {
+                vh.tvExtraText.setText("@" + extraStatus.user.name + "：" + extraStatus.text);
+            } else {
+            }
+
             if (extraStatus.pic_urls != null && extraStatus.pic_urls.size() >
                     0) {
                 vh.extraImgLayout.setVisibility(View.VISIBLE);
@@ -157,7 +163,7 @@ public class StatusAdapter extends BaseAdapter {
             iv.setType(ClickAbleImageView.TYPE_DEFAULT);
             boolean isGif = url.toLowerCase().endsWith(".gif");
             confirmImageType(iv, isGif);
-            iv.setImageResource(-1);
+            iv.setImageResource(android.R.color.transparent);
 
             imgsLayout.addView(iv);
             url = url.replace("thumbnail", /*count == 1 ? "large" :*/ "large");
@@ -240,6 +246,7 @@ public class StatusAdapter extends BaseAdapter {
      * a月b日
      *
      * @param a
+     *
      * @return
      */
     private String traslateDate(String a) {

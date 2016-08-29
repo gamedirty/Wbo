@@ -3,6 +3,7 @@ package com.sovnem.yoyoweibo.app;
 import android.app.Application;
 
 import com.android.volley.RequestQueue;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * 初始化application
@@ -17,9 +18,15 @@ public class YoApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        LeakCanary.install(this);
     }
 
     public static YoApp getInstance() {
+
         return instance;
+    }
+
+    public boolean hasLogin(){
+        return TokenManager.hasLogined(this);
     }
 }

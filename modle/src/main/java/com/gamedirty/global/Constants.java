@@ -4,6 +4,7 @@ package com.gamedirty.global;
  * Created by sovnem on 16/1/1.
  */
 public class Constants {
+
     public static final String APP_KEY = "1541309697";//appkey
     public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";//重定向URL
     public static final String SCOPE =

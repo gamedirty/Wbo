@@ -1,4 +1,4 @@
-package com.sovnem.yoyoweibo.mvp.model;
+package com.sovnem.yoyoweibo.imvp.model;
 
 import com.gamedirty.bean.Status;
 

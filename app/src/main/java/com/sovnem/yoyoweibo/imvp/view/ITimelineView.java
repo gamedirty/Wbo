@@ -1,4 +1,4 @@
-package com.sovnem.yoyoweibo.mvp.view;
+package com.sovnem.yoyoweibo.imvp.view;
 
 /**
  * Created by sovnem on 16/8/29,23:16.

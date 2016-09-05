@@ -83,21 +83,15 @@ public class MineFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void initListview() {
         ArrayList<String> data = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            data.add("我就是哈哈:" + i);
-//        }
+        for (int i = 0; i < 20; i++) {
+            data.add("我就是哈哈:" + i);
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data);
         lvContainer.setAdapter(adapter);
     }
 
     private void initTabLayout() {
         fragments = new ArrayList<>();
-        MyTimelineFragment myTimelineFragment = MyTimelineFragment.getInstance();
-        MyPhotosFragment myPhotosFragment = MyPhotosFragment.getInstance();
-        MyFavoritesFragment myFavoritesFragment = MyFavoritesFragment.getInstance();
-        fragments.add(myTimelineFragment);
-        fragments.add(myPhotosFragment);
-        fragments.add(myFavoritesFragment);
         SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(getFragmentManager());
     }
 

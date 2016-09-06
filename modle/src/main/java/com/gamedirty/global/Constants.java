@@ -13,7 +13,7 @@ public class Constants {
                     + "follow_app_official_microblog," + "invitation_write";//权限相关
 
 
-    private static final String BASE_URL = "https://api.weibo.com/2/";//基础URL
+    public static final String BASE_URL = "https://api.weibo.com/2/";//基础URL
     /**
      * 微博相关接口
      */

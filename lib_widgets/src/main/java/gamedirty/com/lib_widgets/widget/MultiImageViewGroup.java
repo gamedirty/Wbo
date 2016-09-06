@@ -2,6 +2,7 @@ package gamedirty.com.lib_widgets.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -216,4 +217,9 @@ public class MultiImageViewGroup extends
     }
 
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getPointerCount()>1)return true;
+        return super.dispatchTouchEvent(ev);
+    }
 }

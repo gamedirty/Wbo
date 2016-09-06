@@ -105,7 +105,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         params.put("count", "" + AppConfig.PAGE_COUNT);
         isLoading = true;
         L.i("第一次请求");
-        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_DEFALTLOAD));
+        HttpManager.doGetRequest(getActivity(), params, Constants.BASE_URL+Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_DEFALTLOAD));
     }
 
     private void showNewData(String s) {
@@ -116,7 +116,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         recordId();
         adapter = new StatusAdapter(getActivity(), statuses);
         mlv.setAdapter(adapter);
-        mlv.setOnScrollListener(scrollListener);
+//        mlv.setOnScrollListener(scrollListener);
     }
 
     /**
@@ -143,7 +143,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         params.put("count", "" + AppConfig.PAGE_COUNT);
         if (!TextUtils.isEmpty(newest))
             params.put("since_id", "" + newest);
-        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_REFRESH));
+        HttpManager.doGetRequest(getActivity(), params,Constants.BASE_URL+Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_REFRESH));
     }
 
     /**
@@ -168,28 +168,28 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
     boolean canLoad;
     private boolean isLoading;
     private boolean noMore;
-    AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
-
-        @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
-                Glide.with(getActivity()).pauseRequests();
-            } else {
-                Glide.with(getActivity()).resumeRequests();
-            }
-            if (!noMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
-                    && !isLoading && canLoad) {
-                loadMore();
-            }
-        }
-
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem,
-                             int visibleItemCount, int totalItemCount) {
-            canLoad = (firstVisibleItem + visibleItemCount) >= totalItemCount;
-        }
-    };
+//    AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
+//
+//        @Override
+//        public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//            if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
+//                Glide.with(getActivity()).pauseRequests();
+//            } else {
+//                Glide.with(getActivity()).resumeRequests();
+//            }
+//            if (!noMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+//                    && !isLoading && canLoad) {
+//                loadMore();
+//            }
+//        }
+//
+//        @Override
+//        public void onScroll(AbsListView view, int firstVisibleItem,
+//                             int visibleItemCount, int totalItemCount) {
+//            canLoad = (firstVisibleItem + visibleItemCount) >= totalItemCount;
+//        }
+//    };
 
     /**
      * 加载旧的微博
@@ -202,7 +202,7 @@ public class FirstFragment extends BaseFragment implements SwipeRefreshLayout.On
         params.put("count", "" + AppConfig.PAGE_COUNT);
         params.put("max_id", "" + oldest);
         params.put("page", "" + page);
-        HttpManager.doGetRequest(getActivity(), params, Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_LOADMORE));
+        HttpManager.doGetRequest(getActivity(), params, Constants.BASE_URL+Constants.getFriends_timeline, new MyRequestListener(MyRequestListener.TYPE_LOADMORE));
     }
 
     private void addOldStatuss(String s) {

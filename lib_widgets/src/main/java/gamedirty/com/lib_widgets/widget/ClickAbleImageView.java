@@ -34,7 +34,6 @@ public class ClickAbleImageView extends ImageView {
         gif = BitmapFactory.decodeResource(getResources(), R.drawable.timeline_image_gif);
         cut = BitmapFactory.decodeResource(getResources(), R.drawable.timeline_image_longimage);
         bmPaint = new Paint();
-        this.type = type;
     }
 
 
@@ -55,14 +54,9 @@ public class ClickAbleImageView extends ImageView {
         postInvalidate();
     }
 
-    private boolean pressed;//是不是被点击状态
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (pressed) {
-            canvas.drawColor(Color.parseColor("#1f000000"));
-        }
         switch (type) {
             case TYPE_GIF:
                 canvas.drawBitmap(gif, (w - gif.getWidth()), h - gif.getHeight(), bmPaint);
@@ -82,19 +76,4 @@ public class ClickAbleImageView extends ImageView {
         this.h = h;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                pressed = true;
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                pressed = false;
-                invalidate();
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
 }

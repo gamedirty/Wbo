@@ -58,7 +58,7 @@ import android.view.ViewGroup;
  * Created by 赵军辉 on 2016/1/4.
  */
 public class MultiImageViewGroup extends
-                                 ViewGroup {
+        ViewGroup {
     /**
      * 每个图片之间的缝隙宽度
      */
@@ -219,7 +219,8 @@ public class MultiImageViewGroup extends
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getPointerCount()>1)return true;
+        if (ev.getPointerCount() > 1)
+            return true;
         return super.dispatchTouchEvent(ev);
     }
 }
